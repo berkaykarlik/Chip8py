@@ -26,6 +26,7 @@ class Memory():
         pass
 
     def set(memory_address):
+        # TODO: limit memor to 4096 bytes, i.e index 0xFFF
         pass
 
 
