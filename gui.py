@@ -3,7 +3,7 @@ import numpy as np
 from time import sleep
 
 
-class Display():
+class Gui():
     HEIGHT = 32
     WIDTH = 64
 
@@ -26,12 +26,21 @@ class Display():
         self.__display.blit(surf, (0, 0))
         pygame.display.update()
 
+    def process_events(self):
+        events = pygame.event.get()
+        pressed_keys = []
+        for event in events:
+            if event.type == pygame.KEYDOWN:
+                print(pygame.key.name(event.key))
+                pressed_keys.append(pygame.key.name(event.key))
+        return pressed_keys
+
 
 if __name__ == '__main__':
-    display = Display()
+    display = Gui()
     # test if we can update display, spoilers we can
     while(True):
+        # stroke warning, fast changing color ahead
         display._Display__frame = display._Display__frame / \
             255 if display._Display__frame.any() == 255 else display._Display__frame * 255
-        display.update_display()
-        sleep(1)
+        display.process_events()
