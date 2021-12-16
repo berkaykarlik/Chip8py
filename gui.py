@@ -6,14 +6,18 @@ from time import sleep
 class Gui():
     HEIGHT = 32
     WIDTH = 64
+    ALLOWED_KEYS = {"1", "2", "3", "4",
+                    "q", "w", "e", "r",
+                    "a", "s", "d", "f",
+                    "z", "x", "c", "v"}
 
     def __init__(self) -> None:
         self.__frame = np.ones(
-            (Display.WIDTH, Display.HEIGHT), np.uint8) * 255
+            (Gui.WIDTH, Gui.HEIGHT), np.uint8) * 255
 
         # Original chip-8 is 64x32, its too small for computer screen
-        display_width = Display.WIDTH * 10 * 2
-        display_height = Display.HEIGHT * 10 * 2
+        display_width = Gui.WIDTH * 10 * 2
+        display_height = Gui.HEIGHT * 10 * 2
         self.display_size = (display_width, display_height)
 
         pygame.init()
@@ -31,9 +35,15 @@ class Gui():
         pressed_keys = []
         for event in events:
             if event.type == pygame.KEYDOWN:
-                print(pygame.key.name(event.key))
-                pressed_keys.append(pygame.key.name(event.key))
+                key_pressed = pygame.key.name(event.key)
+                if key_pressed in Gui.ALLOWED_KEYS:
+                    pressed_keys.append(key_pressed)
         return pressed_keys
+
+    def flicker(self):
+        self.__frame = self.__frame / \
+            255 if self.__frame.any() == 255 else self.__frame * 255
+        self.update_display()
 
 
 if __name__ == '__main__':
@@ -41,6 +51,7 @@ if __name__ == '__main__':
     # test if we can update display, spoilers we can
     while(True):
         # stroke warning, fast changing color ahead
-        display._Display__frame = display._Display__frame / \
-            255 if display._Display__frame.any() == 255 else display._Display__frame * 255
-        display.process_events()
+        display.flicker()
+        keys_pressed = display.process_events()
+        if keys_pressed:
+            print(keys_pressed)
