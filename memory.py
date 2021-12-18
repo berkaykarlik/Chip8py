@@ -38,8 +38,13 @@ class Memory():
         if self.instr_ptr > 0xFFF:
             raise MemoryError
         self.__memory[self.instr_ptr:self.instr_ptr +
-                      2] = int.from_bytes(value, 'big', signed=False)
+                      2] = np.frombuffer(value, dtype=np.uint8)
         self.instr_ptr += 0x2
+
+    def fetch(self):
+        instr = self.__memory[self.pc:self.pc+2].tobytes()
+        self.pc += 0x2
+        return instr
 
 
 if __name__ == '__main__':

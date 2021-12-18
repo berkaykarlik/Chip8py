@@ -19,9 +19,14 @@ def main():
 
     while(True):
         # fetch
+        curr_instr = mem.fetch()
+        print(curr_instr.hex())
         # decode
         # execute
-        continue
+
+        if curr_instr == b'\x00\x00':
+            print("avoiding infinity, goodbye")
+            break
 
 
 if __name__ == '__main__':
