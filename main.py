@@ -24,20 +24,20 @@ def main():
             break
 
         # decode & execute
-        instr_type = int.from_bytes(curr_instr, 'big') & 0xF000
+        instr_type = (int.from_bytes(curr_instr, 'big') & 0xF000) >> 12
 
         match instr_type:
-            case 0x0000:
+            case 0x0:
                 print("clear screen")
-            case 0x1000:
+            case 0x1:
                 print("jump")
-            case 0x6000:
+            case 0x6:
                 print("set register")
-            case 0x7000:
+            case 0x7:
                 print("add value to register")
-            case 0xA000:
+            case 0xA:
                 print("set index register")
-            case 0xD000:
+            case 0xD:
                 print("display")
             case _:
                 print(
