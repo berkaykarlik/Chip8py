@@ -8,9 +8,11 @@ class Stack():
         # it seeems back then tere was a limit, so lets pretend we dont have 8gb ram
         self.__stack_limit = 12
 
-    def push(self, item):
+    def push(self, item: int):
         if len(self.__stack) > self.__stack_limit:
-            return False
+            return
+        if item.bit_length() > 16:
+            raise TypeError("stack entries must be 16 bit int")
         self.__stack.append(item)
         return True
 
