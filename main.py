@@ -96,7 +96,11 @@ def main():
                         reg.set_Vx(nd_nimble, reg.get_Vx(
                             nd_nimble) ^ reg.get_Vx(rd_nimble))
                     case 4:  # add
-                        pass
+                        _sum = reg.get_Vx(nd_nimble) + reg.get_Vx(rd_nimble)
+                        reg.set_Vx(nd_nimble, _sum)
+                        # set overflow
+                        reg.set_Vx(
+                            0xf, 1) if _sum > 255 else reg.set_Vx(0xf, 0)
                     case 5:  # substract
                         pass
                     case 6:  # shift
