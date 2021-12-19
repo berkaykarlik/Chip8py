@@ -82,8 +82,29 @@ def main():
                 print("add value to register")
                 op_result = (reg.get_Vx(nd_nimble)+nn_nimble) & 0xFF
                 reg.set_Vx(nd_nimble, op_result)
-            case 0x8:
-                pass
+            case 0x8:  # Aritmatic and logic ops
+                match th_nimble:
+                    case 0:  # set
+                        reg.set_Vx(nd_nimble, reg.get_Vx(rd_nimble))
+                    case 1:  # or
+                        reg.set_Vx(nd_nimble, reg.get_Vx(
+                            nd_nimble) & reg.get_Vx(rd_nimble))
+                    case 2:  # and
+                        reg.set_Vx(nd_nimble, reg.get_Vx(
+                            nd_nimble) | reg.get_Vx(rd_nimble))
+                    case 3:  # xor
+                        reg.set_Vx(nd_nimble, reg.get_Vx(
+                            nd_nimble) ^ reg.get_Vx(rd_nimble))
+                    case 4:  # add
+                        pass
+                    case 5:  # substract
+                        pass
+                    case 6:  # shift
+                        pass
+                    case 7:  # substract
+                        pass
+                    case 0xE:  # shift
+                        pass
             case 0x9:
                 print("skip if registers not equal")
                 if reg.get_Vx(nd_nimble) != reg.get_Vx(th_nimble):
