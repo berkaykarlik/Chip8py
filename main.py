@@ -20,9 +20,6 @@ def main():
     while(True):
         # fetch
         curr_instr = mem.fetch()
-        if curr_instr == b'\x00\x00':
-            break
-
         # decode & execute
 
         # decode once to avoid repetation inside case statements, even if its unnecessary for some instructions
@@ -38,36 +35,44 @@ def main():
 
         match st_nimble:
             case 0x0:
-                print("clear screen")
-                if curr_instr == b"\x00\x0e":
-                    gui.clear_screen()
-            case 0x1:
+                match nnn_nimble:
+                    case 0x0E0:  # clear screen
+                        print("clear screen")
+                        gui.clear_screen()
+                    case 0x0EE:  # return from subroutine
+                        print("return from subroutine")
+                        mem.jump(stack.pop())
+                    case 0x000:  # run out of instructions, instr value is empty memory cell
+                        print("finish")
+                        break
+            case 0x1:  # jump
                 print("jump")
                 mem.jump(nnn_nimble)
-            case 0x2:
-
-                pass
+            case 0x2:  # call subroutine
+                print("call subroutine")
+                stack.push(mem.get_pc)
+                mem.jump(nnn_nimble)
             case 0x3:
                 pass
             case 0x4:
                 pass
             case 0x5:
                 pass
-            case 0x6:
+            case 0x6:  # set register
                 print("set register")
-            case 0x7:
+            case 0x7:  # add value to register
                 print("add value to register")
             case 0x8:
                 pass
             case 0x9:
                 pass
-            case 0xA:
+            case 0xA:  # set index register
                 print("set index register")
             case 0xB:
                 pass
             case 0xC:
                 pass
-            case 0xD:
+            case 0xD:  # display / draw
                 print("display")
             case 0xE:
                 pass
