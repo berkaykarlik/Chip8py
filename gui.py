@@ -1,3 +1,4 @@
+from time import sleep
 import pygame
 import numpy as np
 
@@ -11,8 +12,7 @@ class Gui():
                     "z", "x", "c", "v"}
 
     def __init__(self) -> None:
-        self.__frame = np.zeros(
-            (Gui.WIDTH, Gui.HEIGHT), np.uint8)
+        self.__frame = np.zeros((Gui.WIDTH, Gui.HEIGHT), np.uint8)
 
         # Original chip-8 is 64x32, its too small for computer screen
         display_width = Gui.WIDTH * 10 * 2
@@ -24,7 +24,7 @@ class Gui():
         self.__display = pygame.display.set_mode(self.display_size)
 
     def update_display(self):
-        surf = pygame.surfarray.make_surface(self.__frame)
+        surf = pygame.surfarray.make_surface(self.__frame*255)
         surf = pygame.transform.scale(surf, self.display_size)
         self.__display.blit(surf, (0, 0))
         pygame.display.update()
@@ -43,12 +43,19 @@ class Gui():
         self.__frame.fill(0)
         self.update_display()
 
+    def set(self, x, y) -> bool:
+        val = self.__frame[x][y]
+        if val:
+            self.__frame[x][y] = 0
+            return True
+        else:
+            self.__frame[x][y] = 1
+            return False
+
+    def draw_test(self):
+        self.__frame[:, 1] = np.ones((1, Gui.WIDTH), np.uint8) * 255
+
 
 if __name__ == '__main__':
     display = Gui()
     # test if we can update display, spoilers we can
-    while(True):
-        # stroke warning, fast changing color ahead
-        keys_pressed = display.process_events()
-        if keys_pressed:
-            print(keys_pressed)
