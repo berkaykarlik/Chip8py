@@ -1,6 +1,5 @@
 import pygame
 import numpy as np
-from time import sleep
 
 
 class Gui():
@@ -12,8 +11,8 @@ class Gui():
                     "z", "x", "c", "v"}
 
     def __init__(self) -> None:
-        self.__frame = np.ones(
-            (Gui.WIDTH, Gui.HEIGHT), np.uint8) * 255
+        self.__frame = np.zeros(
+            (Gui.WIDTH, Gui.HEIGHT), np.uint8)
 
         # Original chip-8 is 64x32, its too small for computer screen
         display_width = Gui.WIDTH * 10 * 2
@@ -40,9 +39,8 @@ class Gui():
                     pressed_keys.append(key_pressed)
         return pressed_keys
 
-    def flicker(self):
-        self.__frame = self.__frame / \
-            255 if self.__frame.any() == 255 else self.__frame * 255
+    def clear_screen(self):
+        self.__frame.fill(0)
         self.update_display()
 
 
@@ -51,7 +49,6 @@ if __name__ == '__main__':
     # test if we can update display, spoilers we can
     while(True):
         # stroke warning, fast changing color ahead
-        display.flicker()
         keys_pressed = display.process_events()
         if keys_pressed:
             print(keys_pressed)
