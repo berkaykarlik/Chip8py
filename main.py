@@ -25,6 +25,9 @@ def main():
     while(True):
         # delay for simulating a more real CHIP-8 experience,  700 instr per second lets say
         sleep(1/INSTR_PER_SEC)
+
+        gui.process_events()
+
         # fetch
         curr_instr = mem.fetch()
         # decode & execute
