@@ -5,7 +5,7 @@ class Memory():
 
     def __init__(self) -> None:
         self.__memory = np.zeros(0x1000, np.uint8)
-        self.pc = 0x200
+        self.__pc = 0x200
         self.instr_ptr = 0x200
         self.i = None
         # add font
@@ -26,15 +26,18 @@ class Memory():
                                     0xF0, 0x80, 0xF0, 0x80, 0xF0,  # E
                                     0xF0, 0x80, 0xF0, 0x80, 0x80]  # F
 
-    def get(self, memory_address):
-        return self.__memory[memory_address]
+    def get_mem(self, addr):
+        """returns the value from the memory cell of the address provided"""
+        return self.__memory[addr]
 
-    def set(self, memory_address, value):
-        if self.pc > 0xFFF:
+    def set_mem(self, addr, value):
+        """sets the provided value to the memory cell of the address provied"""
+        if self.__pc > 0xFFF:
             raise MemoryError
-        self.__memory[memory_address] = value
+        self.__memory[addr] = value
 
     def load_instr(self, value):
+        """load instrunctions to memory at start"""
         if self.instr_ptr > 0xFFF:
             raise MemoryError
         self.__memory[self.instr_ptr:self.instr_ptr +
@@ -42,9 +45,23 @@ class Memory():
         self.instr_ptr += 0x2
 
     def fetch(self):
-        instr = self.__memory[self.pc:self.pc+2].tobytes()
-        self.pc += 0x2
+        """get the next instructions pc is pointing to"""
+        instr = self.__memory[self.__pc:self.__pc+2].tobytes()
+        self.__pc += 0x2
         return instr
+
+    def jump(self, addr):
+        """move the pc to given address"""
+        self.set_pc(addr)
+
+    def get_pc(self):
+        return self.__pc
+
+    def set_pc(self, addr):
+        """set pc to given address value if within memory limits"""
+        if addr < 0x200 or addr > 0xFFF:
+            raise IndexError
+        self.__pc = addr
 
 
 if __name__ == '__main__':
