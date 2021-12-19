@@ -68,8 +68,11 @@ def main():
                     mem.skip()
             case 0x6:  # set register
                 print("set register")
+                reg.set_Vx(nd_nimble, nn_nimble)
             case 0x7:  # add value to register
                 print("add value to register")
+                op_result = (reg.get_Vx(nd_nimble)+nn_nimble) & 0xFF
+                reg.set_Vx(nd_nimble, op_result)
             case 0x8:
                 pass
             case 0x9:
@@ -78,6 +81,7 @@ def main():
                     mem.skip()
             case 0xA:  # set index register
                 print("set index register")
+                reg.set_I(nnn_nimble)
             case 0xB:
                 pass
             case 0xC:
