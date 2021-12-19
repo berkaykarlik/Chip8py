@@ -26,8 +26,10 @@ class Memory():
                                     0xF0, 0x80, 0xF0, 0x80, 0xF0,  # E
                                     0xF0, 0x80, 0xF0, 0x80, 0x80]  # F
 
-    def get_mem(self, addr: int) -> bytes:
+    def get_mem(self, addr: int) -> np.uint8:
         """returns the value from the memory cell of the address provided"""
+        if addr < 0x200 or addr > 0xFFF:
+            raise IndexError
         return self.__memory[addr]
 
     def set_mem(self, addr: int, value: int) -> None:
