@@ -24,24 +24,58 @@ def main():
             break
 
         # decode & execute
-        instr_type = (int.from_bytes(curr_instr, 'big') & 0xF000) >> 12
 
-        match instr_type:
+        # decode once to avoid repetation inside case statements, even if its unnecessary for some instructions
+        instr_int = int.from_bytes(curr_instr, 'big')
+        st_nimble = (instr_int & 0xF000) >> 12
+        nd_nimble = (instr_int & 0x0F00) >> 8
+        rd_nimble = (instr_int & 0x00F0) >> 4
+        th_nimble = instr_int & 0x000F
+        #thrid and fourth
+        nn_nimble = instr_int & 0x00FF
+        #second, third and fourth
+        nnn_nimble = instr_int & 0x0FFF
+
+        match st_nimble:
             case 0x0:
                 print("clear screen")
+                if curr_instr == b"\x00\x0e":
+                    gui.clear_screen()
             case 0x1:
                 print("jump")
+                mem.jump(nnn_nimble)
+            case 0x2:
+
+                pass
+            case 0x3:
+                pass
+            case 0x4:
+                pass
+            case 0x5:
+                pass
             case 0x6:
                 print("set register")
             case 0x7:
                 print("add value to register")
+            case 0x8:
+                pass
+            case 0x9:
+                pass
             case 0xA:
                 print("set index register")
+            case 0xB:
+                pass
+            case 0xC:
+                pass
             case 0xD:
                 print("display")
+            case 0xE:
+                pass
+            case 0xF:
+                pass
             case _:
                 print(
-                    f"not implemented: {curr_instr.hex()} type {hex(instr_type)}")
+                    f"not implemented: {curr_instr.hex()} type {hex(st_nimble)}")
 
 
 if __name__ == '__main__':
