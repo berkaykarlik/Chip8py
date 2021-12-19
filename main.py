@@ -1,6 +1,7 @@
 from gui import Gui
 from memory import Memory
 from stack import Stack
+from register import Register
 from timers import DelayTimer, SoundTimer
 
 
@@ -10,6 +11,7 @@ def main():
     dtimer = DelayTimer()
     stimer = SoundTimer()
     gui = Gui()
+    reg = Register()
 
     with open("roms\IBM Logo.ch8", 'rb') as rom:
         instr = rom.read()
@@ -28,7 +30,7 @@ def main():
         nd_nimble = (instr_int & 0x0F00) >> 8
         rd_nimble = (instr_int & 0x00F0) >> 4
         th_nimble = instr_int & 0x000F
-        #thrid and fourth
+        #third and fourth
         nn_nimble = instr_int & 0x00FF
         #second, third and fourth
         nnn_nimble = instr_int & 0x0FFF
@@ -52,12 +54,18 @@ def main():
                 print("call subroutine")
                 stack.push(mem.get_pc)
                 mem.jump(nnn_nimble)
-            case 0x3:
-                pass
-            case 0x4:
-                pass
-            case 0x5:
-                pass
+            case 0x3:  # skip one instruction if equal
+                print("skip if equal")
+                if reg.get_Vx(nd_nimble) == nnn_nimble:
+                    mem.skip()
+            case 0x4:  # skip one instruction if not equal
+                print("skip if not equal")
+                if reg.get_Vx(nd_nimble) != nnn_nimble:
+                    mem.skip()
+            case 0x5:  # skip if second and third nimble indexed registers are equal
+                print("skip if registers equal")
+                if reg.get_Vx(nd_nimble) == reg.get_Vx(th_nimble):
+                    mem.skip()
             case 0x6:  # set register
                 print("set register")
             case 0x7:  # add value to register
@@ -65,7 +73,9 @@ def main():
             case 0x8:
                 pass
             case 0x9:
-                pass
+                print("skip if registers not equal")
+                if reg.get_Vx(nd_nimble) != reg.get_Vx(th_nimble):
+                    mem.skip()
             case 0xA:  # set index register
                 print("set index register")
             case 0xB:
