@@ -5,6 +5,8 @@ from register import Register
 from timers import DelayTimer, SoundTimer
 from time import sleep
 
+INSTR_PER_SEC = 700
+
 
 def main():
     mem = Memory()
@@ -21,7 +23,8 @@ def main():
         mem.load_instr(instr[i:i+2])
 
     while(True):
-        sleep(1)
+        # delay for simulating a more real CHIP-8 experience,  700 instr per second lets say
+        sleep(1/INSTR_PER_SEC)
         # fetch
         curr_instr = mem.fetch()
         # decode & execute
@@ -48,8 +51,7 @@ def main():
                         print("return from subroutine")
                         mem.jump(stack.pop())
                     case 0x000:  # run out of instructions, instr value is empty memory cell
-                        print("finish")
-                        sleep(5)
+                        print("empty memory")
             case 0x1:  # jump
                 print("jump")
                 mem.jump(nnn_nimble)
