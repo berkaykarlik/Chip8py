@@ -193,7 +193,7 @@ def main() -> None:
                             reg.set_Vx(nd_nimble, pressed_keys[0])
                     case 0x29:  # get font
                         reg.set_I(mem.get_mem(0x50+(nd_nimble*5)))
-                    case 0x33:
+                    case 0x33:  # binar coded decimal conversion
                         val = reg.get_Vx(nd_nimble)
                         dgt1 = val % 10
                         dgt2 = (val % 100) - dgt1
@@ -201,7 +201,11 @@ def main() -> None:
                         mem.set_mem(reg.get_I(), dgt3)
                         mem.set_mem(reg.get_I()+0x1, dgt2)
                         mem.set_mem(reg.get_I()+0x2, dgt1)
-
+                    case 0x55:  # store mem
+                        for i in range(nd_nimble+1):
+                            mem.set_mem(reg.get_I()+i, reg.get_Vx(i))
+                    case 0x65:  # load mem
+                        pass
             case _:
                 print(
                     f"not implemented: {curr_instr.hex()} type {hex(st_nimble)}")
