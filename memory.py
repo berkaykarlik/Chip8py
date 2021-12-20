@@ -28,8 +28,8 @@ class Memory():
 
     def get_mem(self, addr: int) -> np.uint8:
         """returns the value from the memory cell of the address provided"""
-        if addr < 0x200 or addr > 0xFFF:
-            raise IndexError
+        if addr < 0x0 or addr > 0xFFF:
+            raise IndexError(f"invalid index {hex(addr)}")
         return self.__memory[addr]
 
     def set_mem(self, addr: int, value: int) -> None:

@@ -17,7 +17,7 @@ def main() -> None:
     gui = Gui()
     reg = Register()
 
-    with open("roms\ibm_logo.ch8", 'rb') as rom:
+    with open(r"roms\bc_test.ch8", 'rb') as rom:
         instr = rom.read()
 
     for i in range(0, len(instr), 2):
@@ -65,11 +65,11 @@ def main() -> None:
                 mem.jump(nnn_nimble)
             case 0x3:  # skip one instruction if equal
                 print("skip if equal")
-                if reg.get_Vx(nd_nimble) == nnn_nimble:
+                if reg.get_Vx(nd_nimble) == nn_nimble:
                     mem.skip()
             case 0x4:  # skip one instruction if not equal
                 print("skip if not equal")
-                if reg.get_Vx(nd_nimble) != nnn_nimble:
+                if reg.get_Vx(nd_nimble) != nn_nimble:
                     mem.skip()
             case 0x5:  # skip if second and third nimble indexed registers are equal
                 print("skip if registers equal")
@@ -154,6 +154,9 @@ def main() -> None:
                 mem_loc = reg.get_I()
                 reg.set_Vx(0xF, 0)
                 for j in range(n):
+                    print(
+                        f"memloc: {hex(mem_loc+j)}")
+                    sleep(1)
                     nth_byte = mem.get_mem(mem_loc+j)
                     # nth_byte = nth_byte.tobytes()
                     for i in range(8):  # a sprite is 8 pixel wide
@@ -192,7 +195,7 @@ def main() -> None:
                         else:
                             reg.set_Vx(nd_nimble, pressed_keys[0])
                     case 0x29:  # get font
-                        reg.set_I(mem.get_mem(0x50+(nd_nimble*5)))
+                        reg.set_I(0x50+(nd_nimble*5))
                     case 0x33:  # binar coded decimal conversion
                         val = reg.get_Vx(nd_nimble)
                         dgt1 = val % 10
