@@ -106,12 +106,12 @@ def main() -> None:
                         reg.set_Vx(nd_nimble, _sum)
                         # set overflow
                         reg.set_Vx(
-                            0xf, 1) if _sum > 255 else reg.set_Vx(0xf, 0)
+                            0xF, 1) if _sum > 255 else reg.set_Vx(0xF, 0)
                     case 5:  # substract
                         print("substract")
                         _subs = reg.get_Vx(nd_nimble) - reg.get_Vx(rd_nimble)
                         reg.set_Vx(
-                            0xf, 1) if _subs > 0 else reg.set_Vx(0xf, 0)
+                            0xF, 1) if _subs > 0 else reg.set_Vx(0xF, 0)
                         reg.set_Vx(nd_nimble, _subs)
                     case 6:  # shift
                         print("right shift")
@@ -119,12 +119,12 @@ def main() -> None:
                         shifted_bit = vx & 0x01
                         reg.set_Vx(vx >> 2)
                         reg.set_Vx(
-                            0xf, 1) if shifted_bit else reg.set_Vx(0xf, 0)
+                            0xF, 1) if shifted_bit else reg.set_Vx(0xF, 0)
                     case 7:  # substract
                         print("reverse substract")
                         _subs = reg.get_Vx(rd_nimble) - reg.get_Vx(nd_nimble)
                         reg.set_Vx(
-                            0xf, 1) if _subs > 0 else reg.set_Vx(0xf, 0)
+                            0xF, 1) if _subs > 0 else reg.set_Vx(0xF, 0)
                         reg.set_Vx(nd_nimble, _subs)
                     case 0xE:  # shift
                         print("left shift")
@@ -132,7 +132,7 @@ def main() -> None:
                         shifted_bit = vx & 0x80
                         reg.set_Vx(vx << 2)
                         reg.set_Vx(
-                            0xf, 1) if shifted_bit else reg.set_Vx(0xf, 0)
+                            0xF, 1) if shifted_bit else reg.set_Vx(0xF, 0)
             case 0x9:
                 print("skip if registers not equal")
                 if reg.get_Vx(nd_nimble) != reg.get_Vx(th_nimble):
@@ -152,7 +152,7 @@ def main() -> None:
                 y = reg.get_Vx(rd_nimble) % Gui.HEIGHT
                 n = th_nimble
                 mem_loc = reg.get_I()
-                reg.set_Vx(0xf, 0)
+                reg.set_Vx(0xF, 0)
                 for j in range(n):
                     nth_byte = mem.get_mem(mem_loc+j)
                     # nth_byte = nth_byte.tobytes()
@@ -162,7 +162,7 @@ def main() -> None:
                         if int(nth_byte) & (2**7 >> i):
                             is_flipped = gui.set(x+i, y+j)
                             if is_flipped:
-                                reg.set_Vx(0xf, 1)
+                                reg.set_Vx(0xF, 1)
                 gui.update_display()
             case 0xE:  # press and skip instr
                 match nn_nimble:
@@ -180,6 +180,18 @@ def main() -> None:
                         dtimer.set(reg.get_Vx(nd_nimble))
                     case 0x18:  # set sound timer
                         stimer.set(reg.get_Vx(nd_nimble))
+                    case 0x1E:
+                        new_I = reg.get_I()+reg.get_Vx(nd_nimble)
+                        # not part of original instruction set but it wont break stuff he said
+                        reg.set_Vx(
+                            0xF, 1) if new_I > 0x0FFF else reg.set_Vx(0xF, 0)
+                        reg.set_I()
+                    case 0x0A:
+                        if not pressed_keys:
+                            mem.set_pc(mem.get_pc()-0x2)
+                        else:
+                            reg.set_Vx(nd_nimble, pressed_keys[0])
+
             case _:
                 print(
                     f"not implemented: {curr_instr.hex()} type {hex(st_nimble)}")

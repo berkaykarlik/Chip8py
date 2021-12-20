@@ -23,7 +23,7 @@ class DelayTimer():
             Timer(1/60, self.decrement)
 
 
-class SoundTimer():
+class SoundTimer():  # TODO:beep somehow
     def __init__(self) -> None:
         pass
 
