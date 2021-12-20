@@ -54,6 +54,8 @@ class Memory():
 
     def jump(self, addr: int) -> None:
         """move the pc to given address"""
+        if addr < 0x200 or addr > 0xFFF:
+            raise IndexError
         self.set_pc(addr)
 
     def skip(self) -> None:
