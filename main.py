@@ -164,7 +164,7 @@ def main() -> None:
                             if is_flipped:
                                 reg.set_Vx(0xf, 1)
                 gui.update_display()
-            case 0xE:
+            case 0xE:  # press and skip instr
                 match nn_nimble:
                     case 0x9E:
                         if reg.get_Vx(nd_nimble) in pressed_keys:
@@ -172,8 +172,14 @@ def main() -> None:
                     case 0xA1:
                         if not (reg.get_Vx(nd_nimble) in pressed_keys):
                             mem.skip()
-            case 0xF:
-                pass
+            case 0xF:  # timers
+                match nn_nimble:
+                    case 0x07:  # read delay timer val
+                        reg.set_Vx(nd_nimble, dtimer.get())
+                    case 0x15:  # set delay timer val
+                        dtimer.set(reg.get_Vx(nd_nimble))
+                    case 0x18:  # set sound timer
+                        stimer.set(reg.get_Vx(nd_nimble))
             case _:
                 print(
                     f"not implemented: {curr_instr.hex()} type {hex(st_nimble)}")
