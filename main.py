@@ -17,7 +17,7 @@ def main() -> None:
     gui = Gui()
     reg = Register()
 
-    with open(r"roms\bc_test.ch8", 'rb') as rom:
+    with open(r"roms\test_opcode.ch8", 'rb') as rom:
         instr = rom.read()
 
     for i in range(0, len(instr), 2):
@@ -81,7 +81,7 @@ def main() -> None:
                 print("register set to ", hex(reg.get_Vx(nd_nimble)))
             case 0x7:  # add value to register
                 print("add value to register")
-                op_result = (reg.get_Vx(nd_nimble)+nn_nimble) & 0xFF
+                op_result = (reg.get_Vx(nd_nimble)+nn_nimble) % 256
                 reg.set_Vx(nd_nimble, op_result)
             case 0x8:  # Aritmatic and logic ops
                 match th_nimble:
@@ -117,7 +117,7 @@ def main() -> None:
                         print("right shift")
                         vx = reg.get_Vx(rd_nimble)
                         shifted_bit = vx & 0x01
-                        reg.set_Vx(vx >> 2)
+                        reg.set_Vx(rd_nimble, vx >> 2)
                         reg.set_Vx(
                             0xF, 1) if shifted_bit else reg.set_Vx(0xF, 0)
                     case 7:  # substract
@@ -130,7 +130,7 @@ def main() -> None:
                         print("left shift")
                         vx = reg.get_Vx(rd_nimble)
                         shifted_bit = vx & 0x80
-                        reg.set_Vx(vx << 2)
+                        reg.set_Vx(rd_nimble, vx << 2)
                         reg.set_Vx(
                             0xF, 1) if shifted_bit else reg.set_Vx(0xF, 0)
             case 0x9:
@@ -154,9 +154,6 @@ def main() -> None:
                 mem_loc = reg.get_I()
                 reg.set_Vx(0xF, 0)
                 for j in range(n):
-                    print(
-                        f"memloc: {hex(mem_loc+j)}")
-                    sleep(1)
                     nth_byte = mem.get_mem(mem_loc+j)
                     # nth_byte = nth_byte.tobytes()
                     for i in range(8):  # a sprite is 8 pixel wide

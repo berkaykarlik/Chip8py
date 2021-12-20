@@ -59,7 +59,7 @@ class Memory():
         self.set_pc(addr)
 
     def skip(self) -> None:
-        self.pc += 0x2
+        self.__pc += 0x2
 
     def get_pc(self) -> int:
         return self.__pc
