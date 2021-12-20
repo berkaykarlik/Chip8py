@@ -37,7 +37,7 @@ class Gui():
         events = pygame.event.get()
         pressed_keys = []
         for event in events:
-            if event.type == pygame.KEYDOWN:
+            if event.type == pygame.KEYUP:
                 key_pressed = pygame.key.name(event.key)
                 if key_pressed in Gui.ALLOWED_KEYS:
                     pressed_keys.append(Gui.KEY_MAPPING[key_pressed])
