@@ -205,7 +205,8 @@ def main() -> None:
                         for i in range(nd_nimble+1):
                             mem.set_mem(reg.get_I()+i, reg.get_Vx(i))
                     case 0x65:  # load mem
-                        pass
+                        for i in range(nd_nimble+1):
+                            reg.set_Vx(i, mem.get_mem(reg.get_I()+i))
             case _:
                 print(
                     f"not implemented: {curr_instr.hex()} type {hex(st_nimble)}")
