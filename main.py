@@ -1,14 +1,15 @@
+from time import sleep
+import random
 from gui import Gui
 from memory import Memory
 from stack import Stack
 from register import Register
 from timers import DelayTimer, SoundTimer
-from time import sleep
 
 INSTR_PER_SEC = 700
 
 
-def main():
+def main() -> None:
     mem = Memory()
     stack = Stack()
     dtimer = DelayTimer()
@@ -26,7 +27,7 @@ def main():
         # delay for simulating a more real CHIP-8 experience,  700 instr per second lets say
         sleep(1/INSTR_PER_SEC)
 
-        gui.process_events()
+        pressed_keys = gui.process_events()
 
         # fetch
         curr_instr = mem.fetch()
@@ -85,39 +86,48 @@ def main():
             case 0x8:  # Aritmatic and logic ops
                 match th_nimble:
                     case 0:  # set
+                        print("reg set")
                         reg.set_Vx(nd_nimble, reg.get_Vx(rd_nimble))
                     case 1:  # or
+                        print("or")
                         reg.set_Vx(nd_nimble, reg.get_Vx(
                             nd_nimble) & reg.get_Vx(rd_nimble))
                     case 2:  # and
+                        print("and")
                         reg.set_Vx(nd_nimble, reg.get_Vx(
                             nd_nimble) | reg.get_Vx(rd_nimble))
                     case 3:  # xor
+                        print("xor")
                         reg.set_Vx(nd_nimble, reg.get_Vx(
                             nd_nimble) ^ reg.get_Vx(rd_nimble))
                     case 4:  # add
+                        print("add")
                         _sum = reg.get_Vx(nd_nimble) + reg.get_Vx(rd_nimble)
                         reg.set_Vx(nd_nimble, _sum)
                         # set overflow
                         reg.set_Vx(
                             0xf, 1) if _sum > 255 else reg.set_Vx(0xf, 0)
                     case 5:  # substract
+                        print("substract")
                         _subs = reg.get_Vx(nd_nimble) - reg.get_Vx(rd_nimble)
                         reg.set_Vx(
                             0xf, 1) if _subs > 0 else reg.set_Vx(0xf, 0)
                         reg.set_Vx(nd_nimble, _subs)
                     case 6:  # shift
+                        print("right shift")
                         vx = reg.get_Vx(rd_nimble)
                         shifted_bit = vx & 0x01
                         reg.set_Vx(vx >> 2)
                         reg.set_Vx(
                             0xf, 1) if shifted_bit else reg.set_Vx(0xf, 0)
                     case 7:  # substract
+                        print("reverse substract")
                         _subs = reg.get_Vx(rd_nimble) - reg.get_Vx(nd_nimble)
                         reg.set_Vx(
                             0xf, 1) if _subs > 0 else reg.set_Vx(0xf, 0)
                         reg.set_Vx(nd_nimble, _subs)
                     case 0xE:  # shift
+                        print("left shift")
                         vx = reg.get_Vx(rd_nimble)
                         shifted_bit = vx & 0x80
                         reg.set_Vx(vx << 2)
@@ -132,9 +142,10 @@ def main():
                 reg.set_I(nnn_nimble)
                 print("index reg val ", hex(reg.get_I()))
             case 0xB:
-                pass
+                print("Jump with offset")
+                mem.jump(nnn_nimble+reg.get_Vx(0x0))
             case 0xC:
-                pass
+                reg.set_Vx(nd_nimble, random.randint() & nn_nimble)
             case 0xD:  # display / draw
                 print("display")
                 x = reg.get_Vx(nd_nimble) % Gui.WIDTH
@@ -154,7 +165,13 @@ def main():
                                 reg.set_Vx(0xf, 1)
                 gui.update_display()
             case 0xE:
-                pass
+                match nn_nimble:
+                    case 0x9E:
+                        if reg.get_Vx(nd_nimble) in pressed_keys:
+                            mem.skip()
+                    case 0xA1:
+                        if not (reg.get_Vx(nd_nimble) in pressed_keys):
+                            mem.skip()
             case 0xF:
                 pass
             case _:
