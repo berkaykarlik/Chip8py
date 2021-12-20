@@ -186,11 +186,13 @@ def main() -> None:
                         reg.set_Vx(
                             0xF, 1) if new_I > 0x0FFF else reg.set_Vx(0xF, 0)
                         reg.set_I()
-                    case 0x0A:
+                    case 0x0A:  # wait for key
                         if not pressed_keys:
                             mem.set_pc(mem.get_pc()-0x2)
                         else:
                             reg.set_Vx(nd_nimble, pressed_keys[0])
+                    case 0x29:  # get font
+                        reg.set_I(mem.get_mem(0x50+(nd_nimble*5)))
 
             case _:
                 print(
