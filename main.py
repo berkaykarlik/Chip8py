@@ -107,14 +107,22 @@ def main():
                             0xf, 1) if _subs > 0 else reg.set_Vx(0xf, 0)
                         reg.set_Vx(nd_nimble, _subs)
                     case 6:  # shift
-                        pass
+                        vx = reg.get_Vx(rd_nimble)
+                        shifted_bit = vx & 0x01
+                        reg.set_Vx(vx >> 2)
+                        reg.set_Vx(
+                            0xf, 1) if shifted_bit else reg.set_Vx(0xf, 0)
                     case 7:  # substract
                         _subs = reg.get_Vx(rd_nimble) - reg.get_Vx(nd_nimble)
                         reg.set_Vx(
                             0xf, 1) if _subs > 0 else reg.set_Vx(0xf, 0)
                         reg.set_Vx(nd_nimble, _subs)
                     case 0xE:  # shift
-                        pass
+                        vx = reg.get_Vx(rd_nimble)
+                        shifted_bit = vx & 0x80
+                        reg.set_Vx(vx << 2)
+                        reg.set_Vx(
+                            0xf, 1) if shifted_bit else reg.set_Vx(0xf, 0)
             case 0x9:
                 print("skip if registers not equal")
                 if reg.get_Vx(nd_nimble) != reg.get_Vx(th_nimble):
