@@ -10,6 +10,10 @@ class Gui():
                     "q", "w", "e", "r",
                     "a", "s", "d", "f",
                     "z", "x", "c", "v"}
+    KEY_MAPPING = {"1": 0x1, "2": 0x2, "3": 0x3, "4": 0xC,
+                   "q": 0x4, "w": 0x5, "e": 0x6, "r": 0xD,
+                   "a": 0x7, "s": 0x8, "d": 0x9, "f": 0xE,
+                   "z": 0xA, "x": 0x0, "c": 0xB, "v": 0xF}
 
     def __init__(self) -> None:
         self.__frame = np.zeros((Gui.WIDTH, Gui.HEIGHT), np.uint8)
@@ -36,7 +40,7 @@ class Gui():
             if event.type == pygame.KEYDOWN:
                 key_pressed = pygame.key.name(event.key)
                 if key_pressed in Gui.ALLOWED_KEYS:
-                    pressed_keys.append(key_pressed)
+                    pressed_keys.append(Gui.KEY_MAPPING[key_pressed])
         return pressed_keys
 
     def clear_screen(self):
@@ -59,3 +63,7 @@ class Gui():
 if __name__ == '__main__':
     display = Gui()
     # test if we can update display, spoilers we can
+    while True:
+        keys = display.process_events()
+        if keys:
+            print(keys)
