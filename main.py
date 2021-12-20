@@ -180,7 +180,7 @@ def main() -> None:
                         dtimer.set(reg.get_Vx(nd_nimble))
                     case 0x18:  # set sound timer
                         stimer.set(reg.get_Vx(nd_nimble))
-                    case 0x1E:
+                    case 0x1E:  # add to index
                         new_I = reg.get_I()+reg.get_Vx(nd_nimble)
                         # not part of original instruction set but it wont break stuff he said
                         reg.set_Vx(
