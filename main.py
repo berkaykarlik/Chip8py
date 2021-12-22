@@ -17,7 +17,7 @@ def main() -> None:
     gui = Gui()
     reg = Register()
 
-    with open(r"roms\test_opcode.ch8", 'rb') as rom:
+    with open(r"roms\1dcell.ch8", 'rb') as rom:
         instr = rom.read()
 
     for i in range(0, len(instr), 2):
@@ -145,7 +145,8 @@ def main() -> None:
                 print("Jump with offset")
                 mem.jump(nnn_nimble+reg.get_Vx(0x0))
             case 0xC:
-                reg.set_Vx(nd_nimble, random.randint() & nn_nimble)
+                print("random")
+                reg.set_Vx(nd_nimble, random.randint(0, 255) & nn_nimble)
             case 0xD:  # display / draw
                 print("display")
                 x = reg.get_Vx(nd_nimble) % Gui.WIDTH
@@ -167,33 +168,42 @@ def main() -> None:
             case 0xE:  # press and skip instr
                 match nn_nimble:
                     case 0x9E:
+                        print("skip if pressed")
                         if reg.get_Vx(nd_nimble) in pressed_keys:
                             mem.skip()
                     case 0xA1:
+                        print("skip if not pressed")
                         if not (reg.get_Vx(nd_nimble) in pressed_keys):
                             mem.skip()
             case 0xF:  # timers
                 match nn_nimble:
                     case 0x07:  # read delay timer val
+                        print("read delay timer")
                         reg.set_Vx(nd_nimble, dtimer.get())
                     case 0x15:  # set delay timer val
+                        print("set delay timer")
                         dtimer.set(reg.get_Vx(nd_nimble))
                     case 0x18:  # set sound timer
+                        print("set sound timer")
                         stimer.set(reg.get_Vx(nd_nimble))
                     case 0x1E:  # add to index
+                        print("add to index")
                         new_I = reg.get_I()+reg.get_Vx(nd_nimble)
                         # not part of original instruction set but it wont break stuff he said
                         reg.set_Vx(
                             0xF, 1) if new_I > 0x0FFF else reg.set_Vx(0xF, 0)
                         reg.set_I()
                     case 0x0A:  # wait for key
+                        print("waiting for key")
                         if not pressed_keys:
                             mem.set_pc(mem.get_pc()-0x2)
                         else:
                             reg.set_Vx(nd_nimble, pressed_keys[0])
                     case 0x29:  # get font
+                        print("get font")
                         reg.set_I(0x50+(nd_nimble*5))
                     case 0x33:  # binar coded decimal conversion
+                        print("binary coded decimal conversion")
                         val = reg.get_Vx(nd_nimble)
                         dgt1 = val % 10
                         dgt2 = ((val % 100) - dgt1) // 10
@@ -202,9 +212,11 @@ def main() -> None:
                         mem.set_mem(reg.get_I()+0x1, dgt2)
                         mem.set_mem(reg.get_I()+0x2, dgt1)
                     case 0x55:  # store mem
+                        print("store mem")
                         for i in range(nd_nimble+1):
                             mem.set_mem(reg.get_I()+i, reg.get_Vx(i))
                     case 0x65:  # load mem
+                        print("load mem")
                         for i in range(nd_nimble+1):
                             reg.set_Vx(i, mem.get_mem(reg.get_I()+i))
             case _:
