@@ -91,11 +91,11 @@ def main() -> None:
                     case 1:  # or
                         print("or")
                         reg.set_Vx(nd_nimble, reg.get_Vx(
-                            nd_nimble) & reg.get_Vx(rd_nimble))
+                            nd_nimble) | reg.get_Vx(rd_nimble))
                     case 2:  # and
                         print("and")
                         reg.set_Vx(nd_nimble, reg.get_Vx(
-                            nd_nimble) | reg.get_Vx(rd_nimble))
+                            nd_nimble) & reg.get_Vx(rd_nimble))
                     case 3:  # xor
                         print("xor")
                         reg.set_Vx(nd_nimble, reg.get_Vx(
@@ -117,7 +117,7 @@ def main() -> None:
                         print("right shift")
                         vx = reg.get_Vx(rd_nimble)
                         shifted_bit = vx & 0x01
-                        reg.set_Vx(rd_nimble, vx >> 2)
+                        reg.set_Vx(nd_nimble, vx >> 1)
                         reg.set_Vx(
                             0xF, 1) if shifted_bit else reg.set_Vx(0xF, 0)
                     case 7:  # substract
@@ -130,12 +130,12 @@ def main() -> None:
                         print("left shift")
                         vx = reg.get_Vx(rd_nimble)
                         shifted_bit = vx & 0x80
-                        reg.set_Vx(rd_nimble, vx << 2)
+                        reg.set_Vx(nd_nimble, vx << 1)
                         reg.set_Vx(
                             0xF, 1) if shifted_bit else reg.set_Vx(0xF, 0)
             case 0x9:
                 print("skip if registers not equal")
-                if reg.get_Vx(nd_nimble) != reg.get_Vx(th_nimble):
+                if reg.get_Vx(nd_nimble) != reg.get_Vx(rd_nimble):
                     mem.skip()
             case 0xA:  # set index register
                 print("set index register to", hex(nnn_nimble))
@@ -196,8 +196,8 @@ def main() -> None:
                     case 0x33:  # binar coded decimal conversion
                         val = reg.get_Vx(nd_nimble)
                         dgt1 = val % 10
-                        dgt2 = (val % 100) - dgt1
-                        dgt3 = val - (val % 100)
+                        dgt2 = ((val % 100) - dgt1) // 10
+                        dgt3 = (val - (val % 100)) // 100
                         mem.set_mem(reg.get_I(), dgt3)
                         mem.set_mem(reg.get_I()+0x1, dgt2)
                         mem.set_mem(reg.get_I()+0x2, dgt1)
