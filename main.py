@@ -17,7 +17,7 @@ def main() -> None:
     gui = Gui()
     reg = Register()
 
-    with open(r"roms\1dcell.ch8", 'rb') as rom:
+    with open(r"roms\SCTEST", 'rb') as rom:
         instr = rom.read()
 
     for i in range(0, len(instr), 2):
@@ -73,12 +73,11 @@ def main() -> None:
                     mem.skip()
             case 0x5:  # skip if second and third nimble indexed registers are equal
                 print("skip if registers equal")
-                if reg.get_Vx(nd_nimble) == reg.get_Vx(th_nimble):
+                if reg.get_Vx(nd_nimble) == reg.get_Vx(rd_nimble):
                     mem.skip()
             case 0x6:  # set register
                 print(f"set register v{nd_nimble} to {hex(nn_nimble)} ")
                 reg.set_Vx(nd_nimble, nn_nimble)
-                print("register set to ", hex(reg.get_Vx(nd_nimble)))
             case 0x7:  # add value to register
                 print("add value to register")
                 op_result = (reg.get_Vx(nd_nimble)+nn_nimble) % 256
@@ -109,30 +108,31 @@ def main() -> None:
                             0xF, 1) if _sum > 255 else reg.set_Vx(0xF, 0)
                     case 5:  # substract
                         print("substract")
-                        _subs = reg.get_Vx(nd_nimble) - reg.get_Vx(rd_nimble)
-                        reg.set_Vx(
-                            0xF, 1) if _subs > 0 else reg.set_Vx(0xF, 0)
+                        vx = reg.get_Vx(nd_nimble)
+                        vy = reg.get_Vx(rd_nimble)
+                        _subs = vx - vy
+                        reg.set_Vx(0xF, 1) if vx > vy else reg.set_Vx(0xF, 0)
                         reg.set_Vx(nd_nimble, _subs)
                     case 6:  # shift
                         print("right shift")
-                        vx = reg.get_Vx(rd_nimble)
-                        shifted_bit = vx & 0x01
+                        vx = reg.get_Vx(rd_nimble)  # ambigous
+                        lsb = vx & 0x01
                         reg.set_Vx(nd_nimble, vx >> 1)
-                        reg.set_Vx(
-                            0xF, 1) if shifted_bit else reg.set_Vx(0xF, 0)
+                        reg.set_Vx(0xF, 1) if lsb else reg.set_Vx(0xF, 0)
                     case 7:  # substract
                         print("reverse substract")
-                        _subs = reg.get_Vx(rd_nimble) - reg.get_Vx(nd_nimble)
-                        reg.set_Vx(
-                            0xF, 1) if _subs > 0 else reg.set_Vx(0xF, 0)
+                        vx = reg.get_Vx(nd_nimble)
+                        vy = reg.get_Vx(rd_nimble)
+                        _subs = vy - vx
+                        reg.set_Vx(0xF, 1) if vy > vx else reg.set_Vx(0xF, 0)
                         reg.set_Vx(nd_nimble, _subs)
                     case 0xE:  # shift
                         print("left shift")
-                        vx = reg.get_Vx(rd_nimble)
-                        shifted_bit = vx & 0x80
+                        vx = reg.get_Vx(rd_nimble)  # ambigous
+                        msb = vx & 0x80
                         reg.set_Vx(nd_nimble, vx << 1)
                         reg.set_Vx(
-                            0xF, 1) if shifted_bit else reg.set_Vx(0xF, 0)
+                            0xF, 1) if msb else reg.set_Vx(0xF, 0)
             case 0x9:
                 print("skip if registers not equal")
                 if reg.get_Vx(nd_nimble) != reg.get_Vx(rd_nimble):
@@ -192,7 +192,7 @@ def main() -> None:
                         # not part of original instruction set but it wont break stuff he said
                         reg.set_Vx(
                             0xF, 1) if new_I > 0x0FFF else reg.set_Vx(0xF, 0)
-                        reg.set_I()
+                        reg.set_I(new_I)
                     case 0x0A:  # wait for key
                         print("waiting for key")
                         if not pressed_keys:
