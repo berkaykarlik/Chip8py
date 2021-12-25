@@ -17,7 +17,7 @@ def main() -> None:
     gui = Gui()
     reg = Register()
 
-    with open(r"roms\SCTEST", 'rb') as rom:
+    with open(r"roms\flightrunner.ch8", 'rb') as rom:
         instr = rom.read()
 
     for i in range(0, len(instr), 2):
@@ -27,7 +27,7 @@ def main() -> None:
         # delay for simulating a more real CHIP-8 experience,  700 instr per second lets say
         sleep(1/INSTR_PER_SEC)
 
-        pressed_keys = gui.process_events()
+        gui.process_events()
 
         # fetch
         curr_instr = mem.fetch()
@@ -166,15 +166,18 @@ def main() -> None:
                                 reg.set_Vx(0xF, 1)
                 gui.update_display()
             case 0xE:  # press and skip instr
+                pressed_keys = gui.get_pool()
                 match nn_nimble:
                     case 0x9E:
                         print("skip if pressed")
+                        print(f"pressed keys {pressed_keys}")
                         if reg.get_Vx(nd_nimble) in pressed_keys:
                             mem.skip()
                     case 0xA1:
                         print("skip if not pressed")
                         if not (reg.get_Vx(nd_nimble) in pressed_keys):
                             mem.skip()
+                del pressed_keys
             case 0xF:  # timers
                 match nn_nimble:
                     case 0x07:  # read delay timer val
@@ -195,10 +198,12 @@ def main() -> None:
                         reg.set_I(new_I)
                     case 0x0A:  # wait for key
                         print("waiting for key")
+                        pressed_keys = gui.get_pool()
                         if not pressed_keys:
                             mem.set_pc(mem.get_pc()-0x2)
                         else:
                             reg.set_Vx(nd_nimble, pressed_keys[0])
+                        del pressed_keys
                     case 0x29:  # get font
                         print("get font")
                         reg.set_I(0x50+(nd_nimble*5))
