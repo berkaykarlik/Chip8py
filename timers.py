@@ -12,7 +12,7 @@ class DelayTimer():
 
     def set(self, value: int) -> None:
         self.__value = value
-        Timer(1/60, self.decrement)
+        Timer(1/60, self.decrement).start()
 
     def get(self) -> None:
         return self.__value
@@ -20,7 +20,7 @@ class DelayTimer():
     def decrement(self) -> None:
         if self.__value > 0:
             self.__value -= 1
-            Timer(1/60, self.decrement)
+            Timer(1/60, self.decrement).start()
 
 
 class SoundTimer():  # TODO:beep somehow
@@ -29,13 +29,17 @@ class SoundTimer():  # TODO:beep somehow
 
     def set(self, value: int) -> None:
         self.__value = value
-        Timer(1/60, self.decrement)
+        Timer(1/60, self.decrement).start()
 
     def decrement(self) -> None:
         if self.__value > 0:
             self.__value -= 1
-            Timer(1/60, self.decrement)
+            Timer(1/60, self.decrement).start()
 
 
 if __name__ == '__main__':
-    DelayTimer().delay(60)
+    t = DelayTimer()
+    t.set(60)
+
+    while t.get() != 0:
+        print(t.get())
