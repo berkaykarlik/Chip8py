@@ -1,4 +1,4 @@
-from time import sleep, time
+from time import sleep
 import pygame
 import numpy as np
 
@@ -26,9 +26,7 @@ class Gui():
         pygame.init()
         pygame.display.set_caption("CHIP-8")
         self.__display = pygame.display.set_mode(self.display_size)
-
-        self.key_pool = []
-        self.last_key_delete = time()
+        self.pool = []
 
     def update_display(self):
         surf = pygame.surfarray.make_surface(self.__frame*255)
@@ -37,20 +35,18 @@ class Gui():
         pygame.display.update()
 
     def process_events(self):
-        if time() - self.last_key_delete > 0.5:
-            self.key_pool = []
         events = pygame.event.get()
         pressed_keys = []
         for event in events:
-            if event.type == pygame.KEYUP:
+            if event.type == pygame.KEYDOWN:
                 key_pressed = pygame.key.name(event.key)
                 if key_pressed in Gui.ALLOWED_KEYS:
                     pressed_keys.append(Gui.KEY_MAPPING[key_pressed])
-        self.key_pool += pressed_keys
+        self.pool += pressed_keys
 
     def get_pool(self):
-        tmp = self.key_pool
-        self.key_pool = []
+        tmp = self.pool
+        self.pool = []
         return tmp
 
     def clear_screen(self):
@@ -75,6 +71,6 @@ if __name__ == '__main__':
     # test if we can update display, spoilers we can
     while True:
         display.process_events()
-        pooled = display.get_pool()
-        if pooled:
-            print(pooled)
+        keys = display.get_pool()
+        if keys:
+            print(keys)
