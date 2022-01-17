@@ -26,7 +26,7 @@ class Gui():
         pygame.init()
         pygame.display.set_caption("CHIP-8")
         self.__display = pygame.display.set_mode(self.display_size)
-        self.pool = []
+        self.pool = set()
 
     def update_display(self):
         surf = pygame.surfarray.make_surface(self.__frame*255)
@@ -36,18 +36,17 @@ class Gui():
 
     def process_events(self):
         events = pygame.event.get()
-        pressed_keys = []
         for event in events:
             if event.type == pygame.KEYDOWN:
                 key_pressed = pygame.key.name(event.key)
                 if key_pressed in Gui.ALLOWED_KEYS:
-                    pressed_keys.append(Gui.KEY_MAPPING[key_pressed])
-        self.pool += pressed_keys
+                    self.pool.add(Gui.KEY_MAPPING[key_pressed])
+            if event.type == pygame.KEYUP:
+                key_pressed = pygame.key.name(event.key)
+                self.pool.remove(Gui.KEY_MAPPING[key_pressed])
 
     def get_pool(self):
-        tmp = self.pool
-        self.pool = []
-        return tmp
+        return list(self.pool)
 
     def clear_screen(self):
         self.__frame.fill(0)
