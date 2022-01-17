@@ -1,5 +1,8 @@
-from time import sleep
+import argparse
 import random
+from pathlib import Path
+from time import sleep
+
 from gui import Gui
 from memory import Memory
 from stack import Stack
@@ -9,7 +12,7 @@ from timers import DelayTimer, SoundTimer
 INSTR_PER_SEC = 700
 
 
-def main() -> None:
+def main(rom_path: Path) -> None:
     mem = Memory()
     stack = Stack()
     dtimer = DelayTimer()
@@ -17,7 +20,7 @@ def main() -> None:
     gui = Gui()
     reg = Register()
 
-    with open(r"roms\flightrunner.ch8", 'rb') as rom:
+    with open(rom_path, 'rb') as rom:
         instr = rom.read()
 
     for i in range(0, len(instr), 2):
@@ -230,4 +233,8 @@ def main() -> None:
 
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser(description='chip-8 code interpreter')
+    parser.add_argument('rom_path', type=Path,
+                        nargs=1, help='.ch8 file path, i.e rom to interpret')
+    args = parser.parse_args()
+    main(args.rom_path[0])
