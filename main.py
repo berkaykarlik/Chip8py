@@ -9,7 +9,7 @@ from stack import Stack
 from register import Register
 from timers import DelayTimer, SoundTimer
 
-INSTR_PER_SEC = 700
+INSTR_PER_SEC = 1400
 
 
 def main(rom_path: Path) -> None:
