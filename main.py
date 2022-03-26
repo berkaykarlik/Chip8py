@@ -3,11 +3,13 @@ import random
 from pathlib import Path
 from time import sleep
 
+import processor
 from gui import Gui
 from memory import Memory
 from stack import Stack
 from register import Register
 from timers import DelayTimer, SoundTimer
+
 
 INSTR_PER_SEC = 1400
 
@@ -24,7 +26,8 @@ def main(rom_path: Path) -> None:
         instr = rom.read()
 
     for i in range(0, len(instr), 2):
-        mem.load_instr(instr[i:i+2])
+        int_instr = int.from_bytes(instr[i:i + 2], byteorder='big')
+        mem.load_instr(int_instr)
 
     while(True):
         # delay for simulating a more real CHIP-8 experience,  700 instr per second lets say
@@ -37,28 +40,24 @@ def main(rom_path: Path) -> None:
         # fetch
         curr_instr = mem.fetch()
         # decode & execute
-        print(f"curr_instr {curr_instr.hex()}")
 
         # decode once to avoid repetation inside case statements, even if its unnecessary for some instructions
-        instr_int = int.from_bytes(curr_instr, 'big')
-        st_nimble = (instr_int & 0xF000) >> 12
-        nd_nimble = (instr_int & 0x0F00) >> 8
-        rd_nimble = (instr_int & 0x00F0) >> 4
-        th_nimble = instr_int & 0x000F
+        st_nimble = (curr_instr & 0xF000) >> 12
+        nd_nimble = (curr_instr & 0x0F00) >> 8
+        rd_nimble = (curr_instr & 0x00F0) >> 4
+        th_nimble = curr_instr & 0x000F
         #third and fourth
-        nn_nimble = instr_int & 0x00FF
+        nn_nimble = curr_instr & 0x00FF
         #second, third and fourth
-        nnn_nimble = instr_int & 0x0FFF
+        nnn_nimble = curr_instr & 0x0FFF
 
         match st_nimble:
             case 0x0:
                 match nnn_nimble:
-                    case 0x0E0:  # clear screen
-                        print("clear screen")
-                        gui.clear_screen()
-                    case 0x0EE:  # return from subroutine
-                        print("return from subroutine")
-                        mem.jump(stack.pop())
+                    case 0x0E0:
+                        processor._00e0(gui)
+                    case 0x0EE:
+                        processor._00ee(mem, stack)
                     case 0x000:  # run out of instructions, instr value is empty memory cell
                         print("empty memory")
             case 0x1:  # jump
@@ -107,7 +106,7 @@ def main(rom_path: Path) -> None:
                     case 4:  # add
                         print("add")
                         _sum = reg.get_Vx(nd_nimble) + reg.get_Vx(rd_nimble)
-                        reg.set_Vx(nd_nimble, _sum)
+                        reg.set_Vx(nd_nimble, _sum % 256)
                         # set overflow
                         reg.set_Vx(
                             0xF, 1) if _sum > 255 else reg.set_Vx(0xF, 0)
@@ -225,8 +224,7 @@ def main(rom_path: Path) -> None:
                         for i in range(nd_nimble+1):
                             reg.set_Vx(i, mem.get_mem(reg.get_I()+i))
             case _:
-                print(
-                    f"not implemented: {curr_instr.hex()} type {hex(st_nimble)}")
+                print(f"not implemented: {curr_instr} type {st_nimble}")
 
 
 if __name__ == '__main__':
