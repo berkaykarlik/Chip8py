@@ -134,7 +134,8 @@ def main(rom_path: Path) -> None:
                         print("left shift")
                         vx = reg.get_Vx(rd_nimble)  # ambigous
                         msb = vx & 0x80
-                        reg.set_Vx(nd_nimble, vx << 1)
+                        vx = (vx << 1) % 256
+                        reg.set_Vx(nd_nimble, vx)
                         reg.set_Vx(
                             0xF, 1) if msb else reg.set_Vx(0xF, 0)
             case 0x9:
