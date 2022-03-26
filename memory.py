@@ -57,7 +57,7 @@ class Memory():
 
         if self.instr_ptr > Memory.UPPER_MEM_LIM:
             raise IndexError
-        if value.bit_length > 16:
+        if value.bit_length() > 16:
             raise ValueError
 
         self.__memory[self.instr_ptr] = value >> 8
