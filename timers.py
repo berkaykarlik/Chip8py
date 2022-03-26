@@ -1,14 +1,14 @@
 from time import time
 from threading import Timer
-
+from typing import Union
 FREQ = 60  # hz
 DELAY_LIMIT = 256  # 1 byte
 
 
 class DelayTimer():
     def __init__(self) -> None:
-        self.__value = 0
-        self.__time = None
+        self.__value = 0.0
+        self.__time : Union[float,None]  = None
         pass
 
 
@@ -19,7 +19,7 @@ class DelayTimer():
         self.__time = time()
 
 
-    def get(self) -> None:
+    def get(self) -> int:
         """calculate how much time passed since last set and return decremented value"""
         if self.__time is None:
             raise Exception("Timer not set")
@@ -32,7 +32,7 @@ class DelayTimer():
                 self.__time = None
                 self.__value = 0
 
-            return self.__value
+            return int(self.__value)
 
 
 class SoundTimer():  # TODO:beep somehow

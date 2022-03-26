@@ -3,7 +3,7 @@ import numpy as np
 
 class Register():
     def __init__(self) -> None:
-        self.__I = np.uint8()
+        self.__I = 0
         self.__V_regs = np.zeros(16, np.uint8)
 
     def set_I(self, val: int) -> None:
@@ -28,10 +28,4 @@ class Register():
         if reg_ind < 0x0 or reg_ind > 0xF:
             raise IndexError(
                 f"we dont have register V{reg_ind}, available index 0x0-0xF")
-        return self.__V_regs[reg_ind]
-
-
-if __name__ == "__main__":
-    regs = Register()
-    print(regs._Register__I)
-    print(regs._Register__V_regs)
+        return int(self.__V_regs[reg_ind])

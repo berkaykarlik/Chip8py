@@ -26,7 +26,7 @@ class Gui():
         pygame.init()
         pygame.display.set_caption("CHIP-8")
         self.__display = pygame.display.set_mode(self.display_size)
-        self.pool = set()
+        self.pool : set = set()
 
     def update_display(self):
         surf = pygame.surfarray.make_surface(self.__frame*255)

@@ -18,6 +18,8 @@ def test_get_set():
         tmp_mem.set_mem(i, value_to_set)
         retrived_val =  tmp_mem.get_mem(i)
         assert retrived_val == value_to_set
+        #check if retrived_val is of type int
+        assert isinstance(retrived_val, int)
 
     for i in range (Memory.LOWER_MEM_LIM, Memory.UPPER_MEM_LIM + 1):
         value_to_set = i% 2**8 # 8 bit
@@ -43,9 +45,11 @@ def test_load_and_fetch():
     for  i in range(Memory.LOWER_MEM_LIM,Memory.UPPER_MEM_LIM + 1):
         tmp_mem = Memory()
         instr_2byte = i% 2**16 # 16 bit
-        instr_2byte = instr_2byte.to_bytes(2, byteorder='big')
         tmp_mem.load_instr(instr_2byte)
-        assert tmp_mem.fetch() == instr_2byte
+        fetched_val = tmp_mem.fetch()
+        assert fetched_val == instr_2byte
+        #check if fetched_val is of type int
+        assert isinstance(fetched_val, int)
 
 
 def test_pc():

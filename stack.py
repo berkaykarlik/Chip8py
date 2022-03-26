@@ -4,7 +4,7 @@
 class Stack():
     def __init__(self) -> None:
         # plot twist stack was a list all along
-        self.__stack = []
+        self.__stack : list = []
         # it seeems back then tere was a limit, so lets pretend we dont have 8gb ram
         self.__stack_limit = 16 #or 12?
 

@@ -32,11 +32,11 @@ class Memory():
                                     0xF0, 0x80, 0xF0, 0x80, 0x80]  # F
 
 
-    def get_mem(self, addr: int) -> np.uint8:
+    def get_mem(self, addr: int) -> int:
         """returns the value from the memory cell of the address provided"""
         if addr < 0x00 or addr > Memory.UPPER_MEM_LIM:
             raise IndexError(f"invalid index {hex(addr)}")
-        return self.__memory[addr]
+        return int(self.__memory[addr])
 
 
     def set_mem(self, addr: int, value: int) -> None:
@@ -46,20 +46,22 @@ class Memory():
         self.__memory[addr] = value
 
 
-    def load_instr(self, value: bytes) -> None:
+    def load_instr(self, value: int) -> None:
         """load instrunctions to memory at start"""
         if self.instr_ptr > Memory.UPPER_MEM_LIM:
             raise IndexError
-        self.__memory[self.instr_ptr:self.instr_ptr +
-                      2] = np.frombuffer(value, dtype=np.uint8)
+        self.__memory[self.instr_ptr] = value >> 8
+        self.__memory[self.instr_ptr+1] = value & 0x00FF
         self.instr_ptr += 0x2
 
 
-    def fetch(self) -> bytes:
+    def fetch(self) -> int:
         """get the next instructions pc is pointing to"""
-        instr = self.__memory[self.__pc:self.__pc+2].tobytes()
+        first_byte = int(self.__memory[self.__pc])
+        second_byte= int(self.__memory[self.__pc+1])
+        _2byte_instr = (first_byte << 8) | second_byte
         self.__pc += 0x2
-        return instr
+        return _2byte_instr
 
 
     def jump(self, addr: int) -> None:
@@ -83,7 +85,3 @@ class Memory():
             raise IndexError
         self.__pc = addr
 
-
-if __name__ == '__main__':
-    mem = Memory()
-    print(mem._Memory__memory[0x50:0xA0])
