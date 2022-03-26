@@ -1,4 +1,3 @@
-from tkinter import E
 import pytest
 from memory import Memory
 
