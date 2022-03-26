@@ -32,7 +32,7 @@ class Memory():
 
     def get_mem(self, addr: int) -> np.uint8:
         """returns the value from the memory cell of the address provided"""
-        if addr < Memory.LOWER_MEM_LIM or addr > Memory.UPPER_MEM_LIM:
+        if addr < 0x00 or addr > Memory.UPPER_MEM_LIM:
             raise IndexError(f"invalid index {hex(addr)}")
         return self.__memory[addr]
 
