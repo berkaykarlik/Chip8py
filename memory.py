@@ -1,12 +1,16 @@
 import numpy as np
 
-
+#TODO: use the whole array but offset by 0x200, this implementation is wasting space
 class Memory():
 
+    #both inclusive
+    UPPER_MEM_LIM = 0xFFF
+    LOWER_MEM_LIM = 0x200
+
     def __init__(self) -> None:
-        self.__memory = np.zeros(0x1000, np.uint8)
-        self.__pc = 0x200
-        self.instr_ptr = 0x200
+        self.__memory = np.zeros(Memory.UPPER_MEM_LIM + 1, np.uint8)
+        self.__pc = Memory.LOWER_MEM_LIM
+        self.instr_ptr = Memory.LOWER_MEM_LIM
         self.i = None
         # add font
         self.__memory[0x50:0xA0] = [0xF0, 0x90, 0x90, 0x90, 0xF0,  # 0
@@ -28,20 +32,20 @@ class Memory():
 
     def get_mem(self, addr: int) -> np.uint8:
         """returns the value from the memory cell of the address provided"""
-        if addr < 0x0 or addr > 0xFFF:
+        if addr < Memory.LOWER_MEM_LIM or addr > Memory.UPPER_MEM_LIM:
             raise IndexError(f"invalid index {hex(addr)}")
         return self.__memory[addr]
 
     def set_mem(self, addr: int, value: int) -> None:
         """sets the provided value to the memory cell of the address provied"""
-        if self.__pc > 0xFFF:
-            raise MemoryError
+        if self.__pc > Memory.UPPER_MEM_LIM:
+            raise IndexError
         self.__memory[addr] = value
 
     def load_instr(self, value: int) -> None:
         """load instrunctions to memory at start"""
-        if self.instr_ptr > 0xFFF:
-            raise MemoryError
+        if self.instr_ptr > Memory.UPPER_MEM_LIM:
+            raise IndexError
         self.__memory[self.instr_ptr:self.instr_ptr +
                       2] = np.frombuffer(value, dtype=np.uint8)
         self.instr_ptr += 0x2
@@ -54,7 +58,7 @@ class Memory():
 
     def jump(self, addr: int) -> None:
         """move the pc to given address"""
-        if addr < 0x200 or addr > 0xFFF:
+        if addr < Memory.LOWER_MEM_LIM or addr > Memory.UPPER_MEM_LIM:
             raise IndexError
         self.set_pc(addr)
 
@@ -66,7 +70,7 @@ class Memory():
 
     def set_pc(self, addr: int) -> None:
         """set pc to given address value if within memory limits"""
-        if addr < 0x200 or addr > 0xFFF:
+        if addr < Memory.LOWER_MEM_LIM or addr > Memory.UPPER_MEM_LIM:
             raise IndexError
         self.__pc = addr
 
