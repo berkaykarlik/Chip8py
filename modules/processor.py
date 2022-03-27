@@ -34,3 +34,4 @@ def _1nnn(mem:Memory,nnn_nimble:int):
     Jump to location nnn.
     """
     return mem.jump(nnn_nimble)
+

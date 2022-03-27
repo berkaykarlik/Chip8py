@@ -60,9 +60,8 @@ def main(rom_path: Path) -> None:
                         processor._00ee(mem, stack)
                     case 0x000:  # run out of instructions, instr value is empty memory cell
                         print("empty memory")
-            case 0x1:  # jump
-                print("jump")
-                mem.jump(nnn_nimble)
+            case 0x1:
+                processor._1nnn(mem, nnn_nimble)
             case 0x2:  # call subroutine
                 print("call subroutine")
                 stack.push(mem.get_pc())

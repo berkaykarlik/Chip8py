@@ -33,3 +33,12 @@ def test_00ee():
     assert mem.get_pc() == 0xFFE
 
 
+def test_1nnn():
+    """
+    0x1NNN: JP addr
+    Jump to location nnn.
+    """
+    mem = processor.Memory()
+    processor._1nnn(mem,0xFFE)
+    assert mem.get_pc() == 0xFFE
+
