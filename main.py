@@ -81,9 +81,7 @@ def main(rom_path: Path) -> None:
                     case 0:
                         processor._8xy0(reg, nd_nimble, rd_nimble)
                     case 1:  # or
-                        print("or")
-                        reg.set_Vx(nd_nimble, reg.get_Vx(
-                            nd_nimble) | reg.get_Vx(rd_nimble))
+                        processor._8xy1(reg, nd_nimble, rd_nimble)
                     case 2:  # and
                         print("and")
                         reg.set_Vx(nd_nimble, reg.get_Vx(

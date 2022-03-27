@@ -96,3 +96,16 @@ def _8xy0(reg:Register,nd_nimble:int,rd_nimble:int):
     Set Vx = Vy.
     """
     reg.set_Vx(nd_nimble,reg.get_Vx(rd_nimble))
+
+
+def _8xy1(reg:Register,nd_nimble:int,rd_nimble:int):
+    """
+    0x8XY1: OR Vx, Vy
+    Set Vx = Vx OR Vy.
+    """
+    vx = reg.get_Vx(nd_nimble)
+    vy = reg.get_Vx(rd_nimble)
+    res = vx | vy
+    reg.set_Vx(nd_nimble,res)
+
+
