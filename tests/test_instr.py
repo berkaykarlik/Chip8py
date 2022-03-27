@@ -233,3 +233,20 @@ def test_8xy7():
     processor._8xy7(reg,0x3,0x4)
     assert reg.get_Vx(0x3) == 0xFE
     assert reg.get_Vx(0xF) == 1
+
+
+def test_8xye():
+    """
+    0x8XYE: SHL Vx {, Vy}
+    Set Vx = Vx SHL 1.
+    """
+    reg = processor.Register()
+    reg.set_Vx(0x0,0xFF)
+    processor._8xye(reg,0x0)
+    assert reg.get_Vx(0x0) == (0xFF << 1) % 0x100
+    assert reg.get_Vx(0xF) == 1
+
+    reg.set_Vx(0x0,0x01)
+    processor._8xye(reg,0x0)
+    assert reg.get_Vx(0x0) == (0x01 << 1)
+    assert reg.get_Vx(0xF) == 0

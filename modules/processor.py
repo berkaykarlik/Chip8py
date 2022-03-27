@@ -179,3 +179,15 @@ def _8xy7(reg:Register,nd_nimble:int,rd_nimble:int):
     reg.set_Vx(nd_nimble,res)
 
 
+def _8xye(reg:Register,nd_nimble:int):
+    """
+    0x8XYE: SHL Vx {, Vy}
+    Set Vx = Vx SHL 1.
+    """
+    vx = reg.get_Vx(nd_nimble)
+    reg.set_Vx(0xF, vx >> 7)
+    vx <<= 1
+    vx &= 0xFF
+    reg.set_Vx(nd_nimble,vx)
+
+
