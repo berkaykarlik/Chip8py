@@ -1,8 +1,8 @@
-from gui import Gui
-from memory import Memory
-from stack import Stack
-from register import Register
-from timers import DelayTimer, SoundTimer
+from modules.gui import Gui
+from modules.memory import Memory
+from modules.stack import Stack
+from modules.register import Register
+from modules.timers import DelayTimer, SoundTimer
 
 def _0nnn():
     """

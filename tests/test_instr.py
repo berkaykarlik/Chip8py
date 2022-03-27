@@ -1,6 +1,6 @@
 import pytest
-from gui import Gui
-import processor
+from modules.gui import Gui
+import modules.processor as processor
 
 def test__0nnn():
     """

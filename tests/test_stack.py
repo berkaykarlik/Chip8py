@@ -1,5 +1,5 @@
 import pytest
-from stack import Stack
+from modules.stack import Stack
 
 
 def test_push_pop():

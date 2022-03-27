@@ -3,12 +3,12 @@ import random
 from pathlib import Path
 from time import sleep
 
-import processor
-from gui import Gui
-from memory import Memory
-from stack import Stack
-from register import Register
-from timers import DelayTimer, SoundTimer
+import modules.processor as processor
+from modules.gui import Gui
+from modules.memory import Memory
+from modules.stack import Stack
+from modules.register import Register
+from modules.timers import DelayTimer, SoundTimer
 
 
 INSTR_PER_SEC = 1400

@@ -1,5 +1,5 @@
 import pytest
-from register import Register
+from modules.register import Register
 
 
 def test_I():

@@ -1,6 +1,6 @@
 import pytest
 from time import time
-from timers import DelayTimer, FREQ
+from modules.timers import DelayTimer, FREQ
 
 
 def test_delay_timer():

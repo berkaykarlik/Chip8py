@@ -1,5 +1,5 @@
 import pytest
-from memory import Memory
+from modules.memory import Memory
 
 
 
