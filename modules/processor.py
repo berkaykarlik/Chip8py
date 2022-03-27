@@ -28,10 +28,21 @@ def _00ee(mem:Memory,stack:Stack):
     #pop the top value from the stack and jump to it
     return mem.jump(stack.pop())
 
+
 def _1nnn(mem:Memory,nnn_nimble:int):
     """
     0x1NNN: JP addr
     Jump to location nnn.
     """
     return mem.jump(nnn_nimble)
+
+
+def _2nnn(stack:Stack,mem:Memory,nnn_nimble:int):
+    """
+    0x2NNN: CALL addr
+    Call subroutine at nnn.
+    """
+    stack.push(mem.get_pc())
+    mem.jump(nnn_nimble)
+
 

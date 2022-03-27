@@ -42,3 +42,14 @@ def test_1nnn():
     processor._1nnn(mem,0xFFE)
     assert mem.get_pc() == 0xFFE
 
+
+def test_2nnn():
+    """
+    0x2NNN: CALL addr
+    Call subroutine at nnn.
+    """
+    stack = processor.Stack()
+    mem = processor.Memory()
+    processor._2nnn(stack,mem,0xFF1)
+    assert stack.pop() == 0x200
+    assert mem.get_pc() == 0xFF1

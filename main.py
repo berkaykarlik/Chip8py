@@ -3,6 +3,8 @@ import random
 from pathlib import Path
 from time import sleep
 
+from py import process
+
 import modules.processor as processor
 from modules.gui import Gui
 from modules.memory import Memory
@@ -63,9 +65,7 @@ def main(rom_path: Path) -> None:
             case 0x1:
                 processor._1nnn(mem, nnn_nimble)
             case 0x2:  # call subroutine
-                print("call subroutine")
-                stack.push(mem.get_pc())
-                mem.jump(nnn_nimble)
+                processor._2nnn(stack, mem, nnn_nimble)
             case 0x3:  # skip one instruction if equal
                 print("skip if equal")
                 if reg.get_Vx(nd_nimble) == nn_nimble:
