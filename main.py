@@ -78,9 +78,8 @@ def main(rom_path: Path) -> None:
                 processor._7xkk(reg, nn_nimble, nd_nimble)
             case 0x8:  # Aritmatic and logic ops
                 match th_nimble:
-                    case 0:  # set
-                        print("reg set")
-                        reg.set_Vx(nd_nimble, reg.get_Vx(rd_nimble))
+                    case 0:
+                        processor._8xy0(reg, nd_nimble, rd_nimble)
                     case 1:  # or
                         print("or")
                         reg.set_Vx(nd_nimble, reg.get_Vx(

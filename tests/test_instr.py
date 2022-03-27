@@ -119,5 +119,16 @@ def test_7xkk():
     assert reg.get_Vx(0x0) == (0xFF + 0xFF) % 0x100
 
 
+def test_8xy0():
+    """
+    0x8XY0: LD Vx, Vy
+    Set Vx = Vy.
+    """
+    reg = processor.Register()
+    reg.set_Vx(0x0,0x09)
+    reg.set_Vx(0x1,0xFF)
+    processor._8xy0(reg,0x0,0x1)
+    assert reg.get_Vx(0x0) == reg.get_Vx(0x1)
+
 
 

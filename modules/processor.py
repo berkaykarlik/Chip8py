@@ -90,4 +90,9 @@ def _7xkk(reg:Register,nd_nimble:int,nn_nimble:int):
     res = (vx + nn_nimble) % 0x100
     reg.set_Vx(nd_nimble,res)
 
-
+def _8xy0(reg:Register,nd_nimble:int,rd_nimble:int):
+    """
+    0x8XY0: LD Vx, Vy
+    Set Vx = Vy.
+    """
+    reg.set_Vx(nd_nimble,reg.get_Vx(rd_nimble))
