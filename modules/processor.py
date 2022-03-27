@@ -73,4 +73,11 @@ def _5xy0(reg:Register,mem:Memory,nd_nimble:int,rd_nimble:int):
         mem.skip()
 
 
+def _6xkk(reg:Register,nd_nimble:int,nn_nimble:int):
+    """
+    0x6XKK: LD Vx, byte
+    Set Vx = kk.
+    """
+    reg.set_Vx(nd_nimble,nn_nimble)
+
 

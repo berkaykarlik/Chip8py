@@ -96,3 +96,15 @@ def test_5xy0():
     assert mem.get_pc() == 0x202
     processor._5xy0(reg,mem,0x0,0x2)
     assert mem.get_pc() == 0x202
+
+
+def test_6xkk():
+    """
+    0x6XKK: LD Vx, byte
+    Set Vx = kk.
+    """
+    reg = processor.Register()
+    processor._6xkk(reg,0x0,0xFF)
+    assert reg.get_Vx(0x0) == 0xFF
+
+
