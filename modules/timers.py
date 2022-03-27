@@ -8,7 +8,7 @@ DELAY_LIMIT = 256  # 1 byte
 class DelayTimer():
     def __init__(self) -> None:
         self.__value = 0.0
-        self.__time : Union[float,None]  = None
+        self.__time : Union[float,None]  = 0
         pass
 
 
@@ -21,18 +21,15 @@ class DelayTimer():
 
     def get(self) -> int:
         """calculate how much time passed since last set and return decremented value"""
-        if self.__time is None:
-            raise Exception("Timer not set")
-        else:
-            time_passed = time() - self.__time
-            self.__time = time()
-            self.__value = self.__value - (time_passed * FREQ)
+        time_passed = time() - self.__time
+        self.__time = time()
+        self.__value = self.__value - (time_passed * FREQ)
 
-            if self.__value <= 0:
-                self.__time = None
-                self.__value = 0
+        if self.__value <= 0:
+            self.__time = None
+            self.__value = 0
 
-            return int(self.__value)
+        return int(self.__value)
 
 
 class SoundTimer():  # TODO:beep somehow
