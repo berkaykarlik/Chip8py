@@ -92,13 +92,8 @@ def main(rom_path: Path) -> None:
                         processor._8xy5(reg, nd_nimble, rd_nimble)
                     case 6:
                         processor._8xy6(reg, nd_nimble)
-                    case 7:  # substract
-                        print("reverse substract")
-                        vx = reg.get_Vx(nd_nimble)
-                        vy = reg.get_Vx(rd_nimble)
-                        _subs = vy - vx
-                        reg.set_Vx(0xF, 1) if vy > vx else reg.set_Vx(0xF, 0)
-                        reg.set_Vx(nd_nimble, _subs)
+                    case 7:
+                        processor._8xy7(reg, nd_nimble, rd_nimble)
                     case 0xE:  # shift
                         print("left shift")
                         vx = reg.get_Vx(rd_nimble)  # ambigous
