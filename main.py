@@ -88,13 +88,8 @@ def main(rom_path: Path) -> None:
                         processor._8xy3(reg, nd_nimble, rd_nimble)
                     case 4:
                         processor._8xy4(reg, nd_nimble, rd_nimble)
-                    case 5:  # substract
-                        print("substract")
-                        vx = reg.get_Vx(nd_nimble)
-                        vy = reg.get_Vx(rd_nimble)
-                        _subs = vx - vy
-                        reg.set_Vx(0xF, 1) if vx > vy else reg.set_Vx(0xF, 0)
-                        reg.set_Vx(nd_nimble, _subs)
+                    case 5:
+                        processor._8xy5(reg, nd_nimble, rd_nimble)
                     case 6:  # shift
                         print("right shift")
                         vx = reg.get_Vx(rd_nimble)  # ambigous

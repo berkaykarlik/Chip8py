@@ -178,3 +178,24 @@ def test_8xy4():
     processor._8xy4(reg,0x3,0x4)
     assert reg.get_Vx(0x3) == 0xFE
     assert reg.get_Vx(0xF) == 1
+
+
+def test_8xy5():
+    """
+    0x8XY5: SUB Vx, Vy
+    Set Vx = Vx - Vy, set VF = NOT borrow.
+    """
+    reg = processor.Register()
+    reg.set_Vx(0x3,0xFF)
+    reg.set_Vx(0x4,0x01)
+    processor._8xy5(reg,0x3,0x4)
+    assert reg.get_Vx(0x3) == 0xFE
+    assert reg.get_Vx(0xF) == 0
+
+    reg.set_Vx(0x3,0x01)
+    reg.set_Vx(0x4,0xFF)
+    processor._8xy5(reg,0x3,0x4)
+    assert reg.get_Vx(0x3) == (0x01 - 0xFF) % 0x100
+    assert reg.get_Vx(0xF) == 1
+
+
