@@ -94,14 +94,8 @@ def main(rom_path: Path) -> None:
                         processor._8xy6(reg, nd_nimble)
                     case 7:
                         processor._8xy7(reg, nd_nimble, rd_nimble)
-                    case 0xE:  # shift
-                        print("left shift")
-                        vx = reg.get_Vx(rd_nimble)  # ambigous
-                        msb = vx & 0x80
-                        vx = (vx << 1) % 256
-                        reg.set_Vx(nd_nimble, vx)
-                        reg.set_Vx(
-                            0xF, 1) if msb else reg.set_Vx(0xF, 0)
+                    case 0xE:
+                        processor._8xye(reg, nd_nimble)
             case 0x9:
                 print("skip if registers not equal")
                 if reg.get_Vx(nd_nimble) != reg.get_Vx(rd_nimble):
