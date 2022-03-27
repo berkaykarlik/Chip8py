@@ -108,3 +108,16 @@ def test_6xkk():
     assert reg.get_Vx(0x0) == 0xFF
 
 
+def test_7xkk():
+    """
+    0x7XKK: ADD Vx, byte
+    Set Vx = Vx + kk.
+    """
+    reg = processor.Register()
+    reg.set_Vx(0x0,0xFF)
+    processor._7xkk(reg,0x0,0xFF)
+    assert reg.get_Vx(0x0) == (0xFF + 0xFF) % 0x100
+
+
+
+

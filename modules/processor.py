@@ -81,3 +81,13 @@ def _6xkk(reg:Register,nd_nimble:int,nn_nimble:int):
     reg.set_Vx(nd_nimble,nn_nimble)
 
 
+def _7xkk(reg:Register,nd_nimble:int,nn_nimble:int):
+    """
+    0x7XKK: ADD Vx, byte
+    Set Vx = Vx + kk.
+    """
+    vx = reg.get_Vx(nd_nimble)
+    res = (vx + nn_nimble) % 0x100
+    reg.set_Vx(nd_nimble,res)
+
+

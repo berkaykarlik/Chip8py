@@ -74,10 +74,8 @@ def main(rom_path: Path) -> None:
                 processor._5xy0(reg, mem, nd_nimble, rd_nimble)
             case 0x6:
                 processor._6xkk(reg, nn_nimble, nd_nimble)
-            case 0x7:  # add value to register
-                print("add value to register")
-                op_result = (reg.get_Vx(nd_nimble)+nn_nimble) % 256
-                reg.set_Vx(nd_nimble, op_result)
+            case 0x7:
+                processor._7xkk(reg, nn_nimble, nd_nimble)
             case 0x8:  # Aritmatic and logic ops
                 match th_nimble:
                     case 0:  # set
