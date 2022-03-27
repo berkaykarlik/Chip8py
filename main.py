@@ -73,9 +73,9 @@ def main(rom_path: Path) -> None:
             case 0x5:
                 processor._5xy0(reg, mem, nd_nimble, rd_nimble)
             case 0x6:
-                processor._6xkk(reg, nn_nimble, nd_nimble)
+                processor._6xkk(reg, nd_nimble, nn_nimble)
             case 0x7:
-                processor._7xkk(reg, nn_nimble, nd_nimble)
+                processor._7xkk(reg, nd_nimble, nn_nimble)
             case 0x8:  # Aritmatic and logic ops
                 match th_nimble:
                     case 0:
