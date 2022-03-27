@@ -86,13 +86,8 @@ def main(rom_path: Path) -> None:
                         processor._8xy2(reg, nd_nimble, rd_nimble)
                     case 3:
                         processor._8xy3(reg, nd_nimble, rd_nimble)
-                    case 4:  # add
-                        print("add")
-                        _sum = reg.get_Vx(nd_nimble) + reg.get_Vx(rd_nimble)
-                        reg.set_Vx(nd_nimble, _sum % 256)
-                        # set overflow
-                        reg.set_Vx(
-                            0xF, 1) if _sum > 255 else reg.set_Vx(0xF, 0)
+                    case 4:
+                        processor._8xy4(reg, nd_nimble, rd_nimble)
                     case 5:  # substract
                         print("substract")
                         vx = reg.get_Vx(nd_nimble)

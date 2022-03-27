@@ -131,3 +131,15 @@ def _8xy3(reg:Register,nd_nimble:int,rd_nimble:int):
     reg.set_Vx(nd_nimble,res)
 
 
+def _8xy4(reg:Register,nd_nimble:int,rd_nimble:int):
+    """
+    0x8XY4: ADD Vx, Vy
+    Set Vx = Vx + Vy, set VF = carry.
+    """
+    vx = reg.get_Vx(nd_nimble)
+    vy = reg.get_Vx(rd_nimble)
+    res = (vx + vy)
+    reg.set_Vx(0xF, 1) if res > 255 else reg.set_Vx(0xF, 0)
+    res %= 0x100
+    reg.set_Vx(nd_nimble,res)
+
