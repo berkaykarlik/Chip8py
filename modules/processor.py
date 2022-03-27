@@ -53,3 +53,12 @@ def _3xkk(reg:Register,mem:Memory,nd_nimble:int,nn_nimble:int):
     """
     if reg.get_Vx(nd_nimble) == nn_nimble:
         mem.skip()
+
+
+def _4xkk(reg:Register,mem:Memory,nd_nimble:int,nn_nimble:int):
+    """
+    0x4XKK: SNE Vx, byte
+    Skip next instruction if Vx != kk.
+    """
+    if reg.get_Vx(nd_nimble) != nn_nimble:
+        mem.skip()

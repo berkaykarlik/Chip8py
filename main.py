@@ -68,10 +68,8 @@ def main(rom_path: Path) -> None:
                 processor._2nnn(stack, mem, nnn_nimble)
             case 0x3:
                 processor._3xkk(reg, mem, nd_nimble, nn_nimble)
-            case 0x4:  # skip one instruction if not equal
-                print("skip if not equal")
-                if reg.get_Vx(nd_nimble) != nn_nimble:
-                    mem.skip()
+            case 0x4:
+                processor._4xkk(reg, mem, nd_nimble, nn_nimble)
             case 0x5:  # skip if second and third nimble indexed registers are equal
                 print("skip if registers equal")
                 if reg.get_Vx(nd_nimble) == reg.get_Vx(rd_nimble):

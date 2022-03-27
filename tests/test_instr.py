@@ -67,3 +67,17 @@ def test_3xkk():
     assert mem.get_pc() == 0x202
     processor._3xkk(reg,mem,0x0,0x1)
     assert mem.get_pc() == 0x202
+
+
+def test_4xkk():
+    """
+    0x4XKK: SNE Vx, byte
+    Skip next instruction if Vx != kk.
+    """
+    mem = processor.Memory()
+    reg = processor.Register()
+    reg.set_Vx(0x0,0xFF)
+    processor._4xkk(reg,mem,0x0,0x1)
+    assert mem.get_pc() == 0x202
+    processor._4xkk(reg,mem,0x0,0xFF)
+    assert mem.get_pc() == 0x202
