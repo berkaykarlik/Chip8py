@@ -6,10 +6,6 @@ from modules.timers import DelayTimer, FREQ
 def test_delay_timer():
     t = DelayTimer()
 
-    #test getting timer value before its set
-    with pytest.raises(Exception):
-        t.get()
-
     t.set(256)
     curr_time= time()
 
