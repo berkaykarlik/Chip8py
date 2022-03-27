@@ -64,12 +64,10 @@ def main(rom_path: Path) -> None:
                         print("empty memory")
             case 0x1:
                 processor._1nnn(mem, nnn_nimble)
-            case 0x2:  # call subroutine
+            case 0x2:
                 processor._2nnn(stack, mem, nnn_nimble)
-            case 0x3:  # skip one instruction if equal
-                print("skip if equal")
-                if reg.get_Vx(nd_nimble) == nn_nimble:
-                    mem.skip()
+            case 0x3:
+                processor._3xkk(reg, mem, nd_nimble, nn_nimble)
             case 0x4:  # skip one instruction if not equal
                 print("skip if not equal")
                 if reg.get_Vx(nd_nimble) != nn_nimble:

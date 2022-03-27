@@ -53,3 +53,17 @@ def test_2nnn():
     processor._2nnn(stack,mem,0xFF1)
     assert stack.pop() == 0x200
     assert mem.get_pc() == 0xFF1
+
+
+def test_3xkk():
+    """
+    0x3XKK: SE Vx, byte
+    Skip next instruction if Vx = kk.
+    """
+    mem = processor.Memory()
+    reg = processor.Register()
+    reg.set_Vx(0x0,0xFF)
+    processor._3xkk(reg,mem,0x0,0xFF)
+    assert mem.get_pc() == 0x202
+    processor._3xkk(reg,mem,0x0,0x1)
+    assert mem.get_pc() == 0x202

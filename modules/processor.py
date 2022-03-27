@@ -46,3 +46,10 @@ def _2nnn(stack:Stack,mem:Memory,nnn_nimble:int):
     mem.jump(nnn_nimble)
 
 
+def _3xkk(reg:Register,mem:Memory,nd_nimble:int,nn_nimble:int):
+    """
+    0x3XKK: SE Vx, byte
+    Skip next instruction if Vx = kk.
+    """
+    if reg.get_Vx(nd_nimble) == nn_nimble:
+        mem.skip()
