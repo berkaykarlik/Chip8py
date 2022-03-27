@@ -62,3 +62,15 @@ def _4xkk(reg:Register,mem:Memory,nd_nimble:int,nn_nimble:int):
     """
     if reg.get_Vx(nd_nimble) != nn_nimble:
         mem.skip()
+
+
+def _5xy0(reg:Register,mem:Memory,nd_nimble:int,rd_nimble:int):
+    """
+    0x5XY0: SE Vx, Vy
+    Skip next instruction if Vx = Vy.
+    """
+    if reg.get_Vx(nd_nimble) == reg.get_Vx(rd_nimble):
+        mem.skip()
+
+
+

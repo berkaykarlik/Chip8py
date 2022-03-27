@@ -81,3 +81,18 @@ def test_4xkk():
     assert mem.get_pc() == 0x202
     processor._4xkk(reg,mem,0x0,0xFF)
     assert mem.get_pc() == 0x202
+
+
+def test_5xy0():
+    """
+    0x5XY0: SE Vx, Vy
+    Skip next instruction if Vx = Vy.
+    """
+    mem = processor.Memory()
+    reg = processor.Register()
+    reg.set_Vx(0x0,0xFF)
+    reg.set_Vx(0x1,0xFF)
+    processor._5xy0(reg,mem,0x0,0x1)
+    assert mem.get_pc() == 0x202
+    processor._5xy0(reg,mem,0x0,0x2)
+    assert mem.get_pc() == 0x202

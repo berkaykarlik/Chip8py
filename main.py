@@ -70,10 +70,8 @@ def main(rom_path: Path) -> None:
                 processor._3xkk(reg, mem, nd_nimble, nn_nimble)
             case 0x4:
                 processor._4xkk(reg, mem, nd_nimble, nn_nimble)
-            case 0x5:  # skip if second and third nimble indexed registers are equal
-                print("skip if registers equal")
-                if reg.get_Vx(nd_nimble) == reg.get_Vx(rd_nimble):
-                    mem.skip()
+            case 0x5:
+                processor._5xy0(reg, mem, nd_nimble, rd_nimble)
             case 0x6:  # set register
                 print(f"set register v{nd_nimble} to {hex(nn_nimble)} ")
                 reg.set_Vx(nd_nimble, nn_nimble)
