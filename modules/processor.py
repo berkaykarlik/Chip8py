@@ -156,3 +156,13 @@ def _8xy5(reg:Register,nd_nimble:int,rd_nimble:int):
     reg.set_Vx(nd_nimble,res)
 
 
+def _8xy6(reg:Register,nd_nimble:int):
+    """
+    0x8XY6: SHR Vx {, Vy}
+    Set Vx = Vx SHR 1.
+    """
+    vx = reg.get_Vx(nd_nimble)
+    reg.set_Vx(0xF, vx & 0x1)
+    vx >>= 1
+    reg.set_Vx(nd_nimble,vx)
+

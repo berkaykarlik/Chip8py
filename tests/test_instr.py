@@ -199,3 +199,18 @@ def test_8xy5():
     assert reg.get_Vx(0xF) == 1
 
 
+def test_8xy6():
+    """
+    0x8XY6: SHR Vx {, Vy}
+    Set Vx = Vx SHR 1.
+    """
+    reg = processor.Register()
+    reg.set_Vx(0x0,0xFF)
+    processor._8xy6(reg,0x0)
+    assert reg.get_Vx(0x0) == (0xFF >> 1)
+    assert reg.get_Vx(0xF) == 1
+
+    reg.set_Vx(0x0,0xF0)
+    processor._8xy6(reg,0x0)
+    assert reg.get_Vx(0x0) == (0xF0 >> 1)
+    assert reg.get_Vx(0xF) == 0
