@@ -80,12 +80,10 @@ def main(rom_path: Path) -> None:
                 match th_nimble:
                     case 0:
                         processor._8xy0(reg, nd_nimble, rd_nimble)
-                    case 1:  # or
+                    case 1:
                         processor._8xy1(reg, nd_nimble, rd_nimble)
-                    case 2:  # and
-                        print("and")
-                        reg.set_Vx(nd_nimble, reg.get_Vx(
-                            nd_nimble) & reg.get_Vx(rd_nimble))
+                    case 2:
+                        processor._8xy2(reg, nd_nimble, rd_nimble)
                     case 3:  # xor
                         print("xor")
                         reg.set_Vx(nd_nimble, reg.get_Vx(

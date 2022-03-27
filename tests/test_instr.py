@@ -137,9 +137,19 @@ def test_8xy1():
     Set Vx = Vx OR Vy.
     """
     reg = processor.Register()
-    reg.set_Vx(0x0,0x09)
+    reg.set_Vx(0x0,0x00)
     reg.set_Vx(0x1,0xFF)
     processor._8xy1(reg,0x0,0x1)
-    assert reg.get_Vx(0x0) == (0x09 | 0xFF)
+    assert reg.get_Vx(0x0) == 0xFF
 
 
+def test_8xy2():
+    """
+    0x8XY2: AND Vx, Vy
+    Set Vx = Vx AND Vy.
+    """
+    reg = processor.Register()
+    reg.set_Vx(0x0,0x00)
+    reg.set_Vx(0x1,0xFF)
+    processor._8xy2(reg,0x0,0x1)
+    assert reg.get_Vx(0x0) == 0x00
