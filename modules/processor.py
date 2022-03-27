@@ -120,3 +120,14 @@ def _8xy2(reg:Register,nd_nimble:int,rd_nimble:int):
     reg.set_Vx(nd_nimble,res)
 
 
+def _8xy3(reg:Register,nd_nimble:int,rd_nimble:int):
+    """
+    0x8XY3: XOR Vx, Vy
+    Set Vx = Vx XOR Vy.
+    """
+    vx = reg.get_Vx(nd_nimble)
+    vy = reg.get_Vx(rd_nimble)
+    res = vx ^ vy
+    reg.set_Vx(nd_nimble,res)
+
+

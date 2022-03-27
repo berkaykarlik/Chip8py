@@ -153,3 +153,15 @@ def test_8xy2():
     reg.set_Vx(0x1,0xFF)
     processor._8xy2(reg,0x0,0x1)
     assert reg.get_Vx(0x0) == 0x00
+
+
+def test_8xy3():
+    """
+    0x8XY3: XOR Vx, Vy
+    Set Vx = Vx XOR Vy.
+    """
+    reg = processor.Register()
+    reg.set_Vx(0x0,0xF0)
+    reg.set_Vx(0x1,0xFF)
+    processor._8xy3(reg,0x0,0x1)
+    assert reg.get_Vx(0x0) == 0x0F

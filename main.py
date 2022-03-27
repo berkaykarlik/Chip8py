@@ -76,7 +76,7 @@ def main(rom_path: Path) -> None:
                 processor._6xkk(reg, nd_nimble, nn_nimble)
             case 0x7:
                 processor._7xkk(reg, nd_nimble, nn_nimble)
-            case 0x8:  # Aritmatic and logic ops
+            case 0x8:
                 match th_nimble:
                     case 0:
                         processor._8xy0(reg, nd_nimble, rd_nimble)
@@ -84,10 +84,8 @@ def main(rom_path: Path) -> None:
                         processor._8xy1(reg, nd_nimble, rd_nimble)
                     case 2:
                         processor._8xy2(reg, nd_nimble, rd_nimble)
-                    case 3:  # xor
-                        print("xor")
-                        reg.set_Vx(nd_nimble, reg.get_Vx(
-                            nd_nimble) ^ reg.get_Vx(rd_nimble))
+                    case 3:
+                        processor._8xy3(reg, nd_nimble, rd_nimble)
                     case 4:  # add
                         print("add")
                         _sum = reg.get_Vx(nd_nimble) + reg.get_Vx(rd_nimble)
