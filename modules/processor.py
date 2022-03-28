@@ -256,3 +256,12 @@ def ex9e(reg:Register,mem:Memory,nd_nimble:int,pressed_keys:List[int]):
         mem.skip()
 
 
+def exa1(reg:Register,mem:Memory,nd_nimble:int,pressed_keys:List[int]):
+    """
+    0xEXA1: SKNP Vx
+    Skip next instruction if key with the value of Vx is not pressed.
+    """
+    if not reg.get_Vx(nd_nimble) in pressed_keys:
+        mem.skip()
+
+

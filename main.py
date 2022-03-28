@@ -111,9 +111,7 @@ def main(rom_path: Path) -> None:
                     case 0x9E:
                         processor.ex9e(reg, mem, nd_nimble, pressed_keys)
                     case 0xA1:
-                        print("skip if not pressed")
-                        if not (reg.get_Vx(nd_nimble) in pressed_keys):
-                            mem.skip()
+                        processor.exa1(reg, mem, nd_nimble, pressed_keys)
             case 0xF:  # timers
                 match nn_nimble:
                     case 0x07:  # read delay timer val

@@ -324,3 +324,18 @@ def test_ex9e():
 
     processor.ex9e(reg,mem,0x0,[0x8,0x0])
     assert mem.get_pc() == 0x202
+
+
+def test_exa1():
+    """
+    0xEXA1: SKNP Vx
+    Skip next instruction if key with the value of Vx is not pressed.
+    """
+    reg = processor.Register()
+    mem = processor.Memory()
+    reg.set_Vx(0x0,0x07)
+    processor.exa1(reg,mem,0x0,[0x1,0x0])
+    assert mem.get_pc() == 0x202
+
+    processor.exa1(reg,mem,0x0,[0x7,0x0])
+    assert mem.get_pc() == 0x202
