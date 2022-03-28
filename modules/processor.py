@@ -208,3 +208,9 @@ def annn(reg:Register,nn_nimble:int):
     reg.set_I(nn_nimble)
 
 
+def bnnn(reg:Register,mem:Memory,nnn_nimble:int):
+    """
+    0xBNNN: JP V0, addr
+    Jump to location nnn + V0.
+    """
+    mem.set_pc(nnn_nimble + reg.get_Vx(0)) # should this be allowed to overflow

@@ -278,3 +278,15 @@ def test_annn():
     mem = processor.Memory()
     processor.annn(reg,0xABD)
     assert reg.get_I() == 0xABD
+
+
+def test_bnnn():
+    """
+    0xBNNN: JP V0, addr
+    Jump to location nnn + V0.
+    """
+    reg = processor.Register()
+    mem = processor.Memory()
+    reg.set_Vx(0x0,0xAB)
+    processor.bnnn(reg,mem,0xABC)
+    assert mem.get_pc() == 0xABC + 0xAB

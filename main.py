@@ -101,8 +101,7 @@ def main(rom_path: Path) -> None:
             case 0xA:
                 processor.annn(reg, nnn_nimble)
             case 0xB:
-                print("Jump with offset")
-                mem.jump(nnn_nimble+reg.get_Vx(0x0))
+                processor.bnnn(reg, mem, nnn_nimble)
             case 0xC:
                 print("random")
                 reg.set_Vx(nd_nimble, random.randint(0, 255) & nn_nimble)
