@@ -200,3 +200,11 @@ def _9xy0(reg:Register,mem:Memory,nd_nimble:int,rd_nimble:int):
         mem.skip()
 
 
+def annn(reg:Register,nn_nimble:int):
+    """
+    0xANNN: LD I, addr
+    Set I = nnn.
+    """
+    reg.set_I(nn_nimble)
+
+

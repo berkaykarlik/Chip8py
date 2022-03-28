@@ -98,10 +98,8 @@ def main(rom_path: Path) -> None:
                         processor._8xye(reg, nd_nimble)
             case 0x9:
                 processor._9xy0(reg, mem, nd_nimble, rd_nimble)
-            case 0xA:  # set index register
-                print("set index register to", hex(nnn_nimble))
-                reg.set_I(nnn_nimble)
-                print("index reg val ", hex(reg.get_I()))
+            case 0xA:
+                processor.annn(reg, nnn_nimble)
             case 0xB:
                 print("Jump with offset")
                 mem.jump(nnn_nimble+reg.get_Vx(0x0))

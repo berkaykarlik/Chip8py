@@ -267,3 +267,14 @@ def test_9xy0():
     reg.set_Vx(0x0,0x00)
     processor._9xy0(reg,mem,0x0,0x1)
     assert mem.get_pc() == 0x202
+
+
+def test_annn():
+    """
+    0xANNN: LD I, addr
+    Set I = nnn.
+    """
+    reg = processor.Register()
+    mem = processor.Memory()
+    processor.annn(reg,0xABD)
+    assert reg.get_I() == 0xABD
