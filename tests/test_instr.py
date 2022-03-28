@@ -1,3 +1,4 @@
+import time
 import pytest
 from modules.gui import Gui
 import modules.processor as processor
@@ -339,3 +340,18 @@ def test_exa1():
 
     processor.exa1(reg,mem,0x0,[0x7,0x0])
     assert mem.get_pc() == 0x202
+
+
+def test_fx07():
+    """
+    0xFX07: LD Vx, DT
+    Set Vx = delay timer value.
+    """
+    reg = processor.Register()
+    dtimer = processor.DelayTimer()
+    dtimer.set(255)
+    time.sleep(0.5)
+    val = dtimer.get()
+    time.sleep(0.5)
+    processor.fx07(reg,dtimer,0x7)
+    assert reg.get_Vx(0x7) <= val

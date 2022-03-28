@@ -265,3 +265,13 @@ def exa1(reg:Register,mem:Memory,nd_nimble:int,pressed_keys:List[int]):
         mem.skip()
 
 
+def fx07(reg:Register,dtimer:DelayTimer,nd_nimble:int):
+    """
+    0xFX07: LD Vx, DT
+    Set Vx = delay timer value.
+    """
+    reg.set_Vx(nd_nimble,dtimer.get())
+
+
+
+

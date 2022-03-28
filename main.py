@@ -114,9 +114,8 @@ def main(rom_path: Path) -> None:
                         processor.exa1(reg, mem, nd_nimble, pressed_keys)
             case 0xF:  # timers
                 match nn_nimble:
-                    case 0x07:  # read delay timer val
-                        print("read delay timer")
-                        reg.set_Vx(nd_nimble, dtimer.get())
+                    case 0x07:
+                        processor.fx07(reg, dtimer, nd_nimble)
                     case 0x15:  # set delay timer val
                         print("set delay timer")
                         dtimer.set(reg.get_Vx(nd_nimble))
