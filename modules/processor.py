@@ -191,3 +191,12 @@ def _8xye(reg:Register,nd_nimble:int):
     reg.set_Vx(nd_nimble,vx)
 
 
+def _9xy0(reg:Register,mem:Memory,nd_nimble:int,rd_nimble:int):
+    """
+    0x9XY0: SNE Vx, Vy
+    Skip next instruction if Vx != Vy.
+    """
+    if reg.get_Vx(nd_nimble) != reg.get_Vx(rd_nimble):
+        mem.skip()
+
+

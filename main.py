@@ -97,9 +97,7 @@ def main(rom_path: Path) -> None:
                     case 0xE:
                         processor._8xye(reg, nd_nimble)
             case 0x9:
-                print("skip if registers not equal")
-                if reg.get_Vx(nd_nimble) != reg.get_Vx(rd_nimble):
-                    mem.skip()
+                processor._9xy0(reg, mem, nd_nimble, rd_nimble)
             case 0xA:  # set index register
                 print("set index register to", hex(nnn_nimble))
                 reg.set_I(nnn_nimble)

@@ -250,3 +250,20 @@ def test_8xye():
     processor._8xye(reg,0x0)
     assert reg.get_Vx(0x0) == (0x01 << 1)
     assert reg.get_Vx(0xF) == 0
+
+
+def test_9xy0():
+    """
+    0x9XY0: SNE Vx, Vy
+    Skip next instruction if Vx != Vy.
+    """
+    reg = processor.Register()
+    mem = processor.Memory()
+    reg.set_Vx(0x0,0xFF)
+    reg.set_Vx(0x1,0xFF)
+    processor._9xy0(reg,mem,0x0,0x1)
+    assert mem.get_pc() == 0x200
+
+    reg.set_Vx(0x0,0x00)
+    processor._9xy0(reg,mem,0x0,0x1)
+    assert mem.get_pc() == 0x202
