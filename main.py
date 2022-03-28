@@ -118,9 +118,8 @@ def main(rom_path: Path) -> None:
                         processor.fx07(reg, dtimer, nd_nimble)
                     case 0x0A:
                         processor.fx0a(reg, gui, nd_nimble)
-                    case 0x15:  # set delay timer val
-                        print("set delay timer")
-                        dtimer.set(reg.get_Vx(nd_nimble))
+                    case 0x15:
+                        processor.fx15(reg, dtimer, nd_nimble)
                     case 0x18:  # set sound timer
                         print("set sound timer")
                         stimer.set(reg.get_Vx(nd_nimble))

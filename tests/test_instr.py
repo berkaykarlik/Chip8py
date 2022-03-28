@@ -349,12 +349,10 @@ def test_fx07():
     """
     reg = processor.Register()
     dtimer = processor.DelayTimer()
-    dtimer.set(255)
-    time.sleep(0.5)
-    val = dtimer.get()
+    dtimer.set(145)
     time.sleep(0.5)
     processor.fx07(reg,dtimer,0x7)
-    assert reg.get_Vx(0x7) <= val
+    assert reg.get_Vx(0x7) <= 145
 
 
 def test_fx0a():
@@ -374,3 +372,15 @@ def test_fx0a():
     processor.fx0a(reg,mem,[0x5],0x5)
     assert reg.get_Vx(0x5) == 0x5
     assert mem.get_pc() == 0x3FC
+
+
+def test_fx15():
+    """
+    0xFX15: LD DT, Vx
+    Set delay timer = Vx.
+    """
+    reg = processor.Register()
+    dtimer = processor.DelayTimer()
+    reg.set_Vx(0x7,0x15)
+    processor.fx15(reg,dtimer,0x7)
+    assert dtimer._DelayTimer__value == reg.get_Vx(0x7)

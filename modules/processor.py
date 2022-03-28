@@ -285,3 +285,11 @@ def fx0a(reg:Register,mem:Memory,pressed_keys:List[int],nd_nimble:int):
         reg.set_Vx(nd_nimble, pressed_keys[0])
 
 
+def fx15(reg:Register,dtimer:DelayTimer,nd_nimble:int):
+    """
+    0xFX15: LD DT, Vx
+    Set delay timer = Vx.
+    """
+    dtimer.set(reg.get_Vx(nd_nimble))
+
+
