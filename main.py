@@ -106,12 +106,10 @@ def main(rom_path: Path) -> None:
                 processor.cxkk(reg, nd_nimble, nn_nimble)
             case 0xD:
                 processor.dxyn(reg, mem, gui, nd_nimble, rd_nimble, th_nimble)
-            case 0xE:  # press and skip instr
+            case 0xE:
                 match nn_nimble:
                     case 0x9E:
-                        print("skip if pressed")
-                        if reg.get_Vx(nd_nimble) in pressed_keys:
-                            mem.skip()
+                        processor.ex9e(reg, mem, nd_nimble, pressed_keys)
                     case 0xA1:
                         print("skip if not pressed")
                         if not (reg.get_Vx(nd_nimble) in pressed_keys):

@@ -309,3 +309,18 @@ def test_dxyn():
     """
     #TODO: implement this test
     pass
+
+
+def test_ex9e():
+    """
+    0xEX9E: SKP Vx
+    Skip next instruction if key with the value of Vx is pressed.
+    """
+    reg = processor.Register()
+    mem = processor.Memory()
+    reg.set_Vx(0x0,0x07)
+    processor.ex9e(reg,mem,0x0,[0x7,0x0])
+    assert mem.get_pc() == 0x202
+
+    processor.ex9e(reg,mem,0x0,[0x8,0x0])
+    assert mem.get_pc() == 0x202

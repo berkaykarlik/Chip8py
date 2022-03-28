@@ -1,4 +1,5 @@
 import random
+from typing import List
 from modules.gui import Gui
 from modules.memory import Memory
 from modules.stack import Stack
@@ -244,3 +245,14 @@ def dxyn(reg:Register,mem:Memory,gui:Gui,nd_nimble:int,rd_nimble:int,th_nimble:i
                 if is_flipped:
                     reg.set_Vx(0xF, 1)
     gui.update_display()
+
+
+def ex9e(reg:Register,mem:Memory,nd_nimble:int,pressed_keys:List[int]):
+    """
+    0xEX9E: SKP Vx
+    Skip next instruction if key with the value of Vx is pressed.
+    """
+    if reg.get_Vx(nd_nimble) in pressed_keys:
+        mem.skip()
+
+
