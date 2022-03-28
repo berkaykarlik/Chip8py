@@ -225,3 +225,22 @@ def cxkk(reg:Register,nd_nimble:int,nn_nimble:int):
     reg.set_Vx(nd_nimble,random.randint(0,255) & nn_nimble)
 
 
+def dxyn(reg:Register,mem:Memory,gui:Gui,nd_nimble:int,rd_nimble:int,th_nimble:int):
+    """
+    0xDXYN: DRW Vx, Vy, nibble
+    Display n-byte sprite starting at memory location I at (Vx, Vy), set VF = collision.
+    """
+    #TODO: fix this, as it wont wrap around the screen
+    x = reg.get_Vx(nd_nimble) % Gui.WIDTH
+    y = reg.get_Vx(rd_nimble) % Gui.HEIGHT
+    n = th_nimble
+    mem_loc = reg.get_I()
+    reg.set_Vx(0xF, 0)
+    for j in range(n):
+        nth_byte = mem.get_mem(mem_loc+j)
+        for i in range(8):
+            if int(nth_byte) & (2**7 >> i):
+                is_flipped = gui.set(x+i, y+j)
+                if is_flipped:
+                    reg.set_Vx(0xF, 1)
+    gui.update_display()

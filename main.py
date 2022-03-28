@@ -104,24 +104,8 @@ def main(rom_path: Path) -> None:
                 processor.bnnn(reg, mem, nnn_nimble)
             case 0xC:
                 processor.cxkk(reg, nd_nimble, nn_nimble)
-            case 0xD:  # display / draw
-                print("display")
-                x = reg.get_Vx(nd_nimble) % Gui.WIDTH
-                y = reg.get_Vx(rd_nimble) % Gui.HEIGHT
-                n = th_nimble
-                mem_loc = reg.get_I()
-                reg.set_Vx(0xF, 0)
-                for j in range(n):
-                    nth_byte = mem.get_mem(mem_loc+j)
-                    # nth_byte = nth_byte.tobytes()
-                    for i in range(8):  # a sprite is 8 pixel wide
-                        # if x + i >= Gui.WIDTH or y + j >= Gui.HEIGHT:
-                        #     break
-                        if int(nth_byte) & (2**7 >> i):
-                            is_flipped = gui.set(x+i, y+j)
-                            if is_flipped:
-                                reg.set_Vx(0xF, 1)
-                gui.update_display()
+            case 0xD:
+                processor.dxyn(reg, mem, gui, nd_nimble, rd_nimble, th_nimble)
             case 0xE:  # press and skip instr
                 match nn_nimble:
                     case 0x9E:

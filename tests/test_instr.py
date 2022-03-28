@@ -300,3 +300,12 @@ def test_cxkk():
     reg = processor.Register()
     processor.cxkk(reg,0x0,0x00) # all we can test if and is working
     assert reg.get_Vx(0x0) == 0
+
+
+def test_dxyn():
+    """
+    0xDXYN: DRW Vx, Vy, nibble
+    Display n-byte sprite starting at memory location I at (Vx, Vy), set VF = collision.
+    """
+    #TODO: implement this test
+    pass
