@@ -384,3 +384,12 @@ def test_fx15():
     reg.set_Vx(0x7,0x15)
     processor.fx15(reg,dtimer,0x7)
     assert dtimer._DelayTimer__value == reg.get_Vx(0x7)
+
+
+def test_fx18():
+    """
+    0xFX18: LD ST, Vx
+    Set sound timer = Vx.
+    """
+    pass
+

@@ -293,3 +293,11 @@ def fx15(reg:Register,dtimer:DelayTimer,nd_nimble:int):
     dtimer.set(reg.get_Vx(nd_nimble))
 
 
+def fx18(reg:Register,stimer:SoundTimer,nd_nimble:int):
+    """
+    0xFX18: LD ST, Vx
+    Set sound timer = Vx.
+    """
+    stimer.set(reg.get_Vx(nd_nimble))
+
+

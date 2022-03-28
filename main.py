@@ -120,9 +120,8 @@ def main(rom_path: Path) -> None:
                         processor.fx0a(reg, gui, nd_nimble)
                     case 0x15:
                         processor.fx15(reg, dtimer, nd_nimble)
-                    case 0x18:  # set sound timer
-                        print("set sound timer")
-                        stimer.set(reg.get_Vx(nd_nimble))
+                    case 0x18:
+                        processor.fx18(reg, stimer, nd_nimble)
                     case 0x1E:  # add to index
                         print("add to index")
                         new_I = reg.get_I()+reg.get_Vx(nd_nimble)
