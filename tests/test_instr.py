@@ -290,3 +290,13 @@ def test_bnnn():
     reg.set_Vx(0x0,0xAB)
     processor.bnnn(reg,mem,0xABC)
     assert mem.get_pc() == 0xABC + 0xAB
+
+
+def test_cxkk():
+    """
+    0xCXKK: RND Vx, byte
+    Set Vx = random byte AND kk.
+    """
+    reg = processor.Register()
+    processor.cxkk(reg,0x0,0x00) # all we can test if and is working
+    assert reg.get_Vx(0x0) == 0

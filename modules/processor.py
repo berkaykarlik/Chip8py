@@ -1,3 +1,4 @@
+import random
 from modules.gui import Gui
 from modules.memory import Memory
 from modules.stack import Stack
@@ -214,3 +215,13 @@ def bnnn(reg:Register,mem:Memory,nnn_nimble:int):
     Jump to location nnn + V0.
     """
     mem.set_pc(nnn_nimble + reg.get_Vx(0)) # should this be allowed to overflow
+
+
+def cxkk(reg:Register,nd_nimble:int,nn_nimble:int):
+    """
+    0xCXKK: RND Vx, byte
+    Set Vx = random byte AND kk.
+    """
+    reg.set_Vx(nd_nimble,random.randint(0,255) & nn_nimble)
+
+

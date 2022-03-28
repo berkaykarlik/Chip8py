@@ -103,8 +103,7 @@ def main(rom_path: Path) -> None:
             case 0xB:
                 processor.bnnn(reg, mem, nnn_nimble)
             case 0xC:
-                print("random")
-                reg.set_Vx(nd_nimble, random.randint(0, 255) & nn_nimble)
+                processor.cxkk(reg, nd_nimble, nn_nimble)
             case 0xD:  # display / draw
                 print("display")
                 x = reg.get_Vx(nd_nimble) % Gui.WIDTH
