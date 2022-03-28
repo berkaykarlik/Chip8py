@@ -355,3 +355,22 @@ def test_fx07():
     time.sleep(0.5)
     processor.fx07(reg,dtimer,0x7)
     assert reg.get_Vx(0x7) <= val
+
+
+def test_fx0a():
+    """
+    0xFX0A: LD Vx, K
+    Wait for a key press, store the value of the key in Vx.
+    """
+    reg = processor.Register()
+    mem = processor.Memory()
+
+    mem.set_pc(0x400)
+    processor.fx0a(reg,mem,[],0x5)
+    assert mem.get_pc() == 0x3FE
+    processor.fx0a(reg,mem,[],0x5)
+    assert mem.get_pc() == 0x3FC
+
+    processor.fx0a(reg,mem,[0x5],0x5)
+    assert reg.get_Vx(0x5) == 0x5
+    assert mem.get_pc() == 0x3FC

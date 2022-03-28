@@ -116,6 +116,8 @@ def main(rom_path: Path) -> None:
                 match nn_nimble:
                     case 0x07:
                         processor.fx07(reg, dtimer, nd_nimble)
+                    case 0x0A:
+                        processor.fx0a(reg, gui, nd_nimble)
                     case 0x15:  # set delay timer val
                         print("set delay timer")
                         dtimer.set(reg.get_Vx(nd_nimble))
@@ -129,12 +131,6 @@ def main(rom_path: Path) -> None:
                         reg.set_Vx(
                             0xF, 1) if new_I > 0x0FFF else reg.set_Vx(0xF, 0)
                         reg.set_I(new_I)
-                    case 0x0A:  # wait for key
-                        print("waiting for key")
-                        if not pressed_keys:
-                            mem.set_pc(mem.get_pc()-0x2)
-                        else:
-                            reg.set_Vx(nd_nimble, pressed_keys[0])
                     case 0x29:  # get font
                         print("get font")
                         reg.set_I(0x50+(nd_nimble*5))
