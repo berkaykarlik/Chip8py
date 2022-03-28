@@ -310,6 +310,11 @@ def fx1e(reg:Register,nd_nimble:int):
     reg.set_I(val)
 
 
-
+def fx29(reg:Register,nd_nimble:int):
+    """
+    0xFX29: LD F, Vx
+    Set I = location of sprite for digit Vx.
+    """
+    reg.set_I(0x50 + (reg.get_Vx(nd_nimble) * 5))
 
 

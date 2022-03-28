@@ -409,3 +409,18 @@ def test_fx1e():
     reg.set_I(0xFFFF)
     with pytest.raises(ValueError):
         processor.fx1e(reg,0x2)
+
+
+def test_fx29():
+    """
+    0xFX29: LD F, Vx
+    Set I = location of sprite for digit Vx.
+    """
+    reg = processor.Register()
+    reg.set_Vx(0x0,0x0)
+    processor.fx29(reg,0x0)
+    assert reg.get_I() == 0x50
+
+    reg.set_Vx(0x1,0xA)
+    processor.fx29(reg,0x1)
+    assert reg.get_I() == (0x50 + 50)

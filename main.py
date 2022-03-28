@@ -129,9 +129,8 @@ def main(rom_path: Path) -> None:
                         reg.set_Vx(
                             0xF, 1) if new_I > 0x0FFF else reg.set_Vx(0xF, 0)
                         reg.set_I(new_I)
-                    case 0x29:  # get font
-                        print("get font")
-                        reg.set_I(0x50+(nd_nimble*5))
+                    case 0x29:
+                        processor.fx29(reg, nd_nimble)
                     case 0x33:  # binar coded decimal conversion
                         print("binary coded decimal conversion")
                         val = reg.get_Vx(nd_nimble)
