@@ -393,3 +393,19 @@ def test_fx18():
     """
     pass
 
+
+def test_fx1e():
+    """
+    0xFX1E: ADD I, Vx
+    Set I = I + Vx.
+    """
+    reg = processor.Register()
+    reg.set_Vx(0x0,0x01)
+    reg.set_I(0x1)
+    processor.fx1e(reg,0x0)
+    assert reg.get_I() == 0x2
+
+    reg.set_Vx(0x2,0xFF)
+    reg.set_I(0xFFFF)
+    with pytest.raises(ValueError):
+        processor.fx1e(reg,0x2)

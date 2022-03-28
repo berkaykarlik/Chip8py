@@ -301,3 +301,15 @@ def fx18(reg:Register,stimer:SoundTimer,nd_nimble:int):
     stimer.set(reg.get_Vx(nd_nimble))
 
 
+def fx1e(reg:Register,nd_nimble:int):
+    """
+    0xFX1E: ADD I, Vx
+    Set I = I + Vx.
+    """
+    val = reg.get_Vx(nd_nimble) + reg.get_I()
+    reg.set_I(val)
+
+
+
+
+

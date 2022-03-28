@@ -8,7 +8,7 @@ def test_I():
     assert regs.get_I() == 0xFF
 
     #test setting more than 2 bytes
-    with pytest.raises(TypeError) as e_info:
+    with pytest.raises(ValueError) as e_info:
         regs.set_I(0xFFFFF)
 
 
@@ -26,5 +26,5 @@ def test_Vx():
         regs.set_Vx(-1, 0xFF)
 
     #test setting more than 1 byte
-    with pytest.raises(TypeError) as e_info:
+    with pytest.raises(ValueError) as e_info:
         regs.set_Vx(0x0, 0xFFF)

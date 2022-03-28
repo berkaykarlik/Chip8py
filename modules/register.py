@@ -8,7 +8,7 @@ class Register():
 
     def set_I(self, val: int) -> None:
         if val.bit_length() > 16:
-            raise TypeError("I register can only be set to 16 bit int")
+            raise ValueError("I register can only be set to 16 bit int")
         self.__I = val
 
     #TODO: should vf be restricted or sepereated?
@@ -17,7 +17,7 @@ class Register():
             raise IndexError(
                 f"we dont have register V{reg_ind}, available index 0x0-0xF")
         if val.bit_length() > 8:
-            raise TypeError(
+            raise ValueError(
                 f"V{reg_ind} register can only be set to 8 bit int")
         self.__V_regs[reg_ind] = val
 
