@@ -153,7 +153,7 @@ def _8xy5(reg:Register,nd_nimble:int,rd_nimble:int):
     """
     vx = reg.get_Vx(nd_nimble)
     vy = reg.get_Vx(rd_nimble)
-    reg.set_Vx(0xF, 1) if vx > vy else reg.set_Vx(0xF, 0)
+    reg.set_Vx(0xF, 1) if vx >= vy else reg.set_Vx(0xF, 0)
     res = (vx - vy) % 0x100
     reg.set_Vx(nd_nimble,res)
 
@@ -176,7 +176,7 @@ def _8xy7(reg:Register,nd_nimble:int,rd_nimble:int):
     """
     vx = reg.get_Vx(nd_nimble)
     vy = reg.get_Vx(rd_nimble)
-    reg.set_Vx(0xF, 1) if vy > vx else reg.set_Vx(0xF, 0)
+    reg.set_Vx(0xF, 1) if vy >= vx else reg.set_Vx(0xF, 0)
     res = (vy - vx) % 0x100
     reg.set_Vx(nd_nimble,res)
 
