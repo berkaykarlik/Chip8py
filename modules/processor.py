@@ -308,6 +308,8 @@ def fx1e(reg:Register,nd_nimble:int):
     """
     val = reg.get_Vx(nd_nimble) + reg.get_I()
     reg.set_I(val)
+    # not part of original instruction set but it wont break stuff he said
+    reg.set_Vx(0xF, 1) if val > 0xFFFF else reg.set_Vx(0xF, 0)
 
 
 def fx29(reg:Register,nd_nimble:int):
