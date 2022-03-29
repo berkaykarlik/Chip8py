@@ -1,5 +1,6 @@
 import argparse
 from pathlib import Path
+from typing import Union
 from time import sleep
 
 import modules.processor as processor
@@ -11,6 +12,27 @@ from modules.timers import DelayTimer, SoundTimer
 
 
 INSTR_PER_SEC = 1400
+
+def load_instr(rom_path:Union[str,Path], mem:Memory) -> None:
+    """
+    Load the instructions from the file to memory
+    if rom dne, raises FileNotFoundError
+    if rom is empty, raises ValueError
+    """
+
+    if not Path(rom_path).exists():
+        raise FileNotFoundError(f"File {rom_path} does not exist")
+
+    with open(rom_path, 'rb') as rom:
+        instr = rom.read()
+
+    if not instr:
+        raise ValueError("No instructions found")
+
+    for i in range(0, len(instr), 2):
+        int_instr = int.from_bytes(instr[i:i + 2], byteorder='big')
+        mem.load_instr(int_instr)
+
 
 def parse_instr(instr:int):
     """
@@ -36,12 +58,6 @@ def main(rom_path: Path) -> None:
     gui = Gui()
     reg = Register()
 
-    with open(rom_path, 'rb') as rom:
-        instr = rom.read()
-
-    for i in range(0, len(instr), 2):
-        int_instr = int.from_bytes(instr[i:i + 2], byteorder='big')
-        mem.load_instr(int_instr)
 
     while(True):
         # delay for simulating a more real CHIP-8 experience,  700 instr per second lets say
