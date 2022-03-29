@@ -434,6 +434,7 @@ def test_fx33():
     reg = processor.Register()
     mem = processor.Memory()
     reg.set_Vx(0x0,123)
+    reg.set_I(0x200)
     processor.fx33(reg,mem,0x0)
     i = reg.get_I()
     assert mem.get_mem(i) == 1
