@@ -14,7 +14,7 @@ Warning: I'm still working on bug fixes
 * Run this command from the root (top level) of this repo:
 `python main.py path_to_ROM_file`
 
-* if you clonned the repo recursively as described in installation steps roms are under: `roms\chip8Archive\roms`
+* if you clonned the repo recursively, as described in installation steps, roms are under: `roms\chip8Archive\roms`
 
 ### Sources
 
