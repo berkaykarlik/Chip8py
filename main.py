@@ -131,15 +131,8 @@ def main(rom_path: Path) -> None:
                         reg.set_I(new_I)
                     case 0x29:
                         processor.fx29(reg, nd_nimble)
-                    case 0x33:  # binar coded decimal conversion
-                        print("binary coded decimal conversion")
-                        val = reg.get_Vx(nd_nimble)
-                        dgt1 = val % 10
-                        dgt2 = ((val % 100) - dgt1) // 10
-                        dgt3 = (val - (val % 100)) // 100
-                        mem.set_mem(reg.get_I(), dgt3)
-                        mem.set_mem(reg.get_I()+0x1, dgt2)
-                        mem.set_mem(reg.get_I()+0x2, dgt1)
+                    case 0x33:
+                        processor.fx33(reg, mem, nd_nimble)
                     case 0x55:  # store mem
                         print("store mem")
                         for i in range(nd_nimble+1):

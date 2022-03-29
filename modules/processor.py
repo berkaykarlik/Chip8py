@@ -318,3 +318,19 @@ def fx29(reg:Register,nd_nimble:int):
     reg.set_I(0x50 + (reg.get_Vx(nd_nimble) * 5))
 
 
+def fx33(reg:Register,mem:Memory,nd_nimble:int):
+    """
+    0xFX33: LD B, Vx
+    Store BCD representation of Vx in memory locations I, I+1, and I+2.
+    """
+    val = reg.get_Vx(nd_nimble)
+    reg.set_I(0x300)
+    i = reg.get_I()
+
+    # Vx value can be within 0-255
+    # get hundreds digit, set it to I loc in mem
+    mem.set_mem(i, val // 100)
+    # get tens digit, set it to I+1 loc in mem
+    mem.set_mem(i+1, (val // 10) % 10)
+    # get ones digit, set it to I+2 loc in mem
+    mem.set_mem(i+2, val % 10)

@@ -424,3 +424,18 @@ def test_fx29():
     reg.set_Vx(0x1,0xA)
     processor.fx29(reg,0x1)
     assert reg.get_I() == (0x50 + 50)
+
+
+def test_fx33():
+    """
+    0xFX33: LD B, Vx
+    Store BCD representation of Vx in memory locations I, I+1, and I+2.
+    """
+    reg = processor.Register()
+    mem = processor.Memory()
+    reg.set_Vx(0x0,123)
+    processor.fx33(reg,mem,0x0)
+    i = reg.get_I()
+    assert mem.get_mem(i) == 1
+    assert mem.get_mem(i+1) == 2
+    assert mem.get_mem(i+2) == 3
