@@ -9,12 +9,3 @@ Warning: it' not complete and contains bugs.
 Run this command from the root (top level) of this repo:
 
 `python main.py path_to_ROM_file`
-
-### Sources
-I own none of the roms.
-
-[bc_test](https://github.com/daniel5151/AC8E)
-
-[test_opcode](https://github.com/corax89/chip8-test-rom)
-
-[game roms](https://johnearnest.github.io/chip8Archive/)
