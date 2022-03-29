@@ -1,9 +1,6 @@
 import argparse
-import random
 from pathlib import Path
 from time import sleep
-
-from py import process
 
 import modules.processor as processor
 from modules.gui import Gui
@@ -14,6 +11,21 @@ from modules.timers import DelayTimer, SoundTimer
 
 
 INSTR_PER_SEC = 1400
+
+def parse_instr(instr:int):
+    """
+    Parse the instruction and return the opcode and the nibbles
+    """
+    st_nimble = (instr & 0xF000) >> 12
+    nd_nimble = (instr & 0x0F00) >> 8
+    rd_nimble = (instr & 0x00F0) >> 4
+    th_nimble = instr & 0x000F
+    #third and fourth
+    nn_nimble = instr & 0x00FF
+    #second, third and fourth
+    nnn_nimble = instr & 0x0FFF
+
+    return st_nimble, nd_nimble, rd_nimble, th_nimble, nn_nimble, nnn_nimble
 
 
 def main(rom_path: Path) -> None:
@@ -35,24 +47,20 @@ def main(rom_path: Path) -> None:
         # delay for simulating a more real CHIP-8 experience,  700 instr per second lets say
         sleep(1/INSTR_PER_SEC)
 
+        #keyboard input
         gui.process_events()
         pressed_keys = gui.get_pool()
-        print(f'pressed_keys {pressed_keys}')
+        print(f'pressed_keys {pressed_keys}') #for debug
 
         # fetch
         curr_instr = mem.fetch()
-        # decode & execute
 
-        # decode once to avoid repetation inside case statements, even if its unnecessary for some instructions
-        st_nimble = (curr_instr & 0xF000) >> 12
-        nd_nimble = (curr_instr & 0x0F00) >> 8
-        rd_nimble = (curr_instr & 0x00F0) >> 4
-        th_nimble = curr_instr & 0x000F
-        #third and fourth
-        nn_nimble = curr_instr & 0x00FF
-        #second, third and fourth
-        nnn_nimble = curr_instr & 0x0FFF
 
+        # decode
+        st_nimble, nd_nimble, rd_nimble, th_nimble, nn_nimble, nnn_nimble = parse_instr(curr_instr)
+
+
+        # execute
         match st_nimble:
             case 0x0:
                 match nnn_nimble:
