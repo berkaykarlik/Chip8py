@@ -439,3 +439,19 @@ def test_fx33():
     assert mem.get_mem(i) == 1
     assert mem.get_mem(i+1) == 2
     assert mem.get_mem(i+2) == 3
+
+
+def test_fx55():
+    """
+    0xFX55: LD [I], Vx
+    Store registers V0 through Vx in memory starting at location I.
+    """
+    reg = processor.Register()
+    mem = processor.Memory()
+    for i in range(0,0x10):
+        reg.set_Vx(i,i)
+    reg.set_I(0x200)
+    processor.fx55(reg,mem,0xF)
+    assert reg.get_I() == 0x200
+    for i in range(0,0x10):
+        assert mem.get_mem(0x200 + i) == i

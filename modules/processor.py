@@ -334,3 +334,12 @@ def fx33(reg:Register,mem:Memory,nd_nimble:int):
     mem.set_mem(i+1, (val // 10) % 10)
     # get ones digit, set it to I+2 loc in mem
     mem.set_mem(i+2, val % 10)
+
+
+def fx55(reg:Register,mem:Memory,nd_nimble:int):
+    """
+    0xFX55: LD [I], Vx
+    Store registers V0 through Vx in memory starting at location I.
+    """
+    for i in range(nd_nimble+1):
+        mem.set_mem(reg.get_I()+i, reg.get_Vx(i))

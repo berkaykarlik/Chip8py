@@ -133,10 +133,8 @@ def main(rom_path: Path) -> None:
                         processor.fx29(reg, nd_nimble)
                     case 0x33:
                         processor.fx33(reg, mem, nd_nimble)
-                    case 0x55:  # store mem
-                        print("store mem")
-                        for i in range(nd_nimble+1):
-                            mem.set_mem(reg.get_I()+i, reg.get_Vx(i))
+                    case 0x55:
+                        processor.fx55(reg, mem, nd_nimble)
                     case 0x65:  # load mem
                         print("load mem")
                         for i in range(nd_nimble+1):
