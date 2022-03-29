@@ -343,3 +343,12 @@ def fx55(reg:Register,mem:Memory,nd_nimble:int):
     """
     for i in range(nd_nimble+1):
         mem.set_mem(reg.get_I()+i, reg.get_Vx(i))
+
+
+def fx65(reg:Register,mem:Memory,nd_nimble:int):
+    """
+    0xFX65: LD Vx, [I]
+    Read registers V0 through Vx from memory starting at location I.
+    """
+    for i in range(nd_nimble+1):
+        reg.set_Vx(i, mem.get_mem(reg.get_I()+i))

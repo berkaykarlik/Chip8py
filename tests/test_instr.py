@@ -455,3 +455,19 @@ def test_fx55():
     assert reg.get_I() == 0x200
     for i in range(0,0x10):
         assert mem.get_mem(0x200 + i) == i
+
+
+def fx65():
+    """
+    0xFX65: LD Vx, [I]
+    Read registers V0 through Vx from memory starting at location I.
+    """
+    reg = processor.Register()
+    mem = processor.Memory()
+    for i in range(0,0x10):
+        mem.set_mem(0x200 + i,i)
+    reg.set_I(0x200)
+    processor.fx65(reg,mem,0xF)
+    assert reg.get_I() == 0x200
+    for i in range(0,0x10):
+        assert reg.get_Vx(i) == i
