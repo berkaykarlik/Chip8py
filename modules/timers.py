@@ -8,7 +8,7 @@ DELAY_LIMIT = 256  # 1 byte
 class DelayTimer():
     def __init__(self) -> None:
         self.__value = 0.0
-        self.__time : Union[float,None]  = 0
+        self.__time  = 0.0
         pass
 
 
@@ -26,7 +26,6 @@ class DelayTimer():
         self.__value = self.__value - (time_passed * FREQ)
 
         if self.__value <= 0:
-            self.__time = None
             self.__value = 0
 
         return int(self.__value)

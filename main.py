@@ -117,7 +117,7 @@ def main(rom_path: Path) -> None:
                     case 0x07:
                         processor.fx07(reg, dtimer, nd_nimble)
                     case 0x0A:
-                        processor.fx0a(reg, gui, nd_nimble)
+                        processor.fx0a(reg, mem, pressed_keys, nd_nimble)
                     case 0x15:
                         processor.fx15(reg, dtimer, nd_nimble)
                     case 0x18:
