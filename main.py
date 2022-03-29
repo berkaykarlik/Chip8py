@@ -58,6 +58,8 @@ def main(rom_path: Path) -> None:
     gui = Gui()
     reg = Register()
 
+    # load the instructions from the file to memory
+    load_instr(rom_path, mem)
 
     while(True):
         # delay for simulating a more real CHIP-8 experience,  700 instr per second lets say
@@ -71,10 +73,8 @@ def main(rom_path: Path) -> None:
         # fetch
         curr_instr = mem.fetch()
 
-
         # decode
         st_nimble, nd_nimble, rd_nimble, th_nimble, nn_nimble, nnn_nimble = parse_instr(curr_instr)
-
 
         # execute
         match st_nimble:
