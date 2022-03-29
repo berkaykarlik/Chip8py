@@ -122,13 +122,8 @@ def main(rom_path: Path) -> None:
                         processor.fx15(reg, dtimer, nd_nimble)
                     case 0x18:
                         processor.fx18(reg, stimer, nd_nimble)
-                    case 0x1E:  # add to index
-                        print("add to index")
-                        new_I = reg.get_I()+reg.get_Vx(nd_nimble)
-                        # not part of original instruction set but it wont break stuff he said
-                        reg.set_Vx(
-                            0xF, 1) if new_I > 0x0FFF else reg.set_Vx(0xF, 0)
-                        reg.set_I(new_I)
+                    case 0x1E:
+                        processor.fx1e(reg, nd_nimble)
                     case 0x29:
                         processor.fx29(reg, nd_nimble)
                     case 0x33:
