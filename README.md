@@ -18,12 +18,12 @@ Warning: I'm still working on bug fixes, see issues for known bugs.
 
 ### Keys
 
-|   |   |   |   |   |
-|---|---|---|---|---|
-| 1 | 2 | 3 | 4 |   |
-| q | w | e | r |   |
-| a | s | d | f |   |
-| z | x | c | v |   |
+|   |   |   |   |
+|---|---|---|---|
+| 1 | 2 | 3 | 4 |
+| q | w | e | r |
+| a | s | d | f |
+| z | x | c | v |
 ### Sources
 
 These are the ones I used, many thanks to:
