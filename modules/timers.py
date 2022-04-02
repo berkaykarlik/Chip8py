@@ -1,6 +1,10 @@
-from time import time
+from time import time, sleep
 from threading import Timer
-from typing import Union
+from array import array
+import pygame
+from pygame.mixer import Sound, get_init, pre_init
+
+
 FREQ = 60  # hz
 DELAY_LIMIT = 256  # 1 byte
 
@@ -31,17 +35,33 @@ class DelayTimer():
         return int(self.__value)
 
 
-class SoundTimer():  # TODO:beep somehow
-    def __init__(self) -> None:
-        pass
+class SoundTimer(Sound):
+    def __init__(self,frequency=440, volume=.1) -> None:
+        pygame.init()
+        self.frequency = frequency
+        Sound.__init__(self, self.build_samples())
+        self.set_volume(volume)
+        pre_init(44100, -16, 1, 1024)
+
+
+    def build_samples(self):
+        period = int(round(get_init()[0] / self.frequency))
+        samples = array("h", [0] * period)
+        amplitude = 2 ** (abs(get_init()[1]) - 1) - 1
+        for time in range(period):
+            if time < period / 2:
+                samples[time] = amplitude
+            else:
+                samples[time] = -amplitude
+        return samples
+
 
     def set(self, value: int) -> None:
-        self.__value = value
-        Timer(1/60, self.decrement).start()
-
-    def decrement(self) -> None:
-        if self.__value > 0:
-            self.__value -= 1
-            Timer(1/60, self.decrement).start()
+        duration_ms = int(1000* value / FREQ )
+        self.play(-1,duration_ms)
 
 
+if __name__ == "__main__":
+    pygame.init()
+    SoundTimer(440).play(-1)
+    sleep(5)
