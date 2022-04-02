@@ -1,3 +1,4 @@
+from gc import is_finalized
 import random
 from typing import List
 from modules.gui import Gui
@@ -5,6 +6,8 @@ from modules.memory import Memory
 from modules.stack import Stack
 from modules.register import Register
 from modules.timers import DelayTimer, SoundTimer
+
+get_nth_bit = lambda x,n: (x >> n) & 1
 
 def _0nnn():
     """
@@ -231,18 +234,20 @@ def dxyn(reg:Register,mem:Memory,gui:Gui,nd_nimble:int,rd_nimble:int,th_nimble:i
     0xDXYN: DRW Vx, Vy, nibble
     Display n-byte sprite starting at memory location I at (Vx, Vy), set VF = collision.
     """
-    #TODO: fix this, as it wont wrap around the screen
-    x = reg.get_Vx(nd_nimble) % Gui.WIDTH
-    y = reg.get_Vx(rd_nimble) % Gui.HEIGHT
+    x = reg.get_Vx(nd_nimble)
+    y = reg.get_Vx(rd_nimble)
     n = th_nimble
     mem_loc = reg.get_I()
-    reg.set_Vx(0xF, 0)
+    any_flip = 0
+
     for j in range(n):
         nth_byte = mem.get_mem(mem_loc+j)
         for i in range(8):
-            bit_val = (nth_byte & (2**7 >> i)) >> (7-i)
-            is_flipped = gui.set(x+i, y+j,bit_val)
-            reg.set_Vx(0xF, is_flipped)
+            nth_bit = get_nth_bit(nth_byte,(7-i))
+            is_flip = gui.set(x+i, y+j,nth_bit)
+            any_flip |= is_flip
+
+    reg.set_Vx(0xF, any_flip)
     gui.update_display()
 
 
