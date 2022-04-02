@@ -17,7 +17,8 @@ Warning: I'm still working on bug fixes, see issues for known bugs.
 * if you clonned the repo recursively, as described in installation steps, roms are under: `roms\chip8Archive\roms`
 
 ### Keys
-
+Every game has different set of controls, I mapped the 16 buttons to the keys in table below.
+Relative order of keys is preserved.
 |   |   |   |   |
 |---|---|---|---|
 | 1 | 2 | 3 | 4 |
