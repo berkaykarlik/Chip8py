@@ -1,8 +1,8 @@
-# CHIP-8-interpreter
+# Chip8py
 
 Just a hobby project to learn basics of emulation.
 It should be able to run chip-8 ROM's on pc when completed and debugged.
-Warning: I'm still working on bug fixes
+Warning: I'm still working on bug fixes, see issues for known bugs.
 
 ### Installation
 * `git clone --recursive https://github.com/berkaykarlik/CHIP-8-interpreter.git`
