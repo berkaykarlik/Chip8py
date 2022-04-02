@@ -56,7 +56,7 @@ class Gui():
         x = x % Gui.WIDTH
         y = y % Gui.HEIGHT
         prev = int(self.__frame[x][y])
-        self.__frame[x][y] = bit_val ^ prev
+        self.__frame[x][y] = prev ^ bit_val
         return prev & ~bit_val
 
     def draw_test(self):
