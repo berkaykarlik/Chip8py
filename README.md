@@ -16,9 +16,18 @@ Warning: I'm still working on bug fixes, see issues for known bugs.
 
 * if you clonned the repo recursively, as described in installation steps, roms are under: `roms\chip8Archive\roms`
 
+### Keys
+Every game has different set of controls, I mapped the 16 buttons to the keys in table below.
+Relative order of keys is preserved.
+|   |   |   |   |
+|---|---|---|---|
+| 1 | 2 | 3 | 4 |
+| q | w | e | r |
+| a | s | d | f |
+| z | x | c | v |
 ### Sources
 
-These are the ones I used, many thanks to:
+These are the sources I used, many thanks to:
 
 * Tobias V. Langhoff, check out his [guide](https://tobiasvl.github.io/blog/write-a-chip-8-emulator/)
 * Thomas P. Greene, check out cowgod's [guide](http://devernay.free.fr/hacks/chip8/C8TECH10.HTM)
