@@ -240,10 +240,9 @@ def dxyn(reg:Register,mem:Memory,gui:Gui,nd_nimble:int,rd_nimble:int,th_nimble:i
     for j in range(n):
         nth_byte = mem.get_mem(mem_loc+j)
         for i in range(8):
-            if int(nth_byte) & (2**7 >> i):
-                is_flipped = gui.set(x+i, y+j)
-                if is_flipped:
-                    reg.set_Vx(0xF, 1)
+            bit_val = (nth_byte & (2**7 >> i)) >> (7-i)
+            is_flipped = gui.set(x+i, y+j,bit_val)
+            reg.set_Vx(0xF, is_flipped)
     gui.update_display()
 
 
