@@ -52,14 +52,12 @@ class Gui():
         self.__frame.fill(0)
         self.update_display()
 
-    def set(self, x, y) -> bool:
-        val = self.__frame[x][y]
-        if val:
-            self.__frame[x][y] = 0
-            return True
-        else:
-            self.__frame[x][y] = 1
-            return False
+    def set(self, x:int, y:int, bit_val:int) -> bool:
+        x = x % Gui.WIDTH
+        y = y % Gui.HEIGHT
+        prev = int(self.__frame[x][y])
+        self.__frame[x][y] = bit_val ^ prev
+        return prev & ~bit_val
 
     def draw_test(self):
         self.__frame[:, 1] = np.ones((1, Gui.WIDTH), np.uint8) * 255
