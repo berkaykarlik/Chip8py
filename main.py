@@ -11,7 +11,7 @@ from modules.register import Register
 from modules.timers import DelayTimer, SoundTimer
 
 
-INSTR_PER_SEC = 1400
+INSTR_PER_SEC = 1000
 
 def load_instr(rom_path:Union[str,Path], mem:Memory) -> None:
     """
