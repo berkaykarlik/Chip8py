@@ -57,7 +57,7 @@ class Gui():
         y = y % Gui.HEIGHT
         prev = int(self.__frame[x][y])
         self.__frame[x][y] = prev ^ bit_val
-        return prev & ~bit_val
+        return prev & bit_val
 
     def draw_test(self):
         self.__frame[:, 1] = np.ones((1, Gui.WIDTH), np.uint8) * 255
