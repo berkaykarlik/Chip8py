@@ -7,3 +7,5 @@
 for game roms to try clone the repo recursively and checkout roms at `roms\chip8Archive\roms`
 or visit [chip8Archive ](https://johnearnest.github.io/chip8Archive/) and download manually.
 
+Thanks to [David Winter](http://www.pong-story.com/chip8/) for: 
+PONG, PONG2, INVADERS, BREAKOUT
