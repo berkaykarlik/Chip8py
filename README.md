@@ -1,5 +1,8 @@
 # Chip8py
 
+![INVADERS](../assets/invader.png?raw=true =250x250 "available on roms and david winters site")
+![PETDOG](../assets/petdog.png?raw=true =250x250 "available on chip8archive")
+
 Just a hobby project to learn basics of emulation.
 It should be able to run chip-8 ROM's on pc when completed and debugged.
 Warning: I'm still working on bug fixes, see issues for known bugs.
