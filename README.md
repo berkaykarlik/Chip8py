@@ -1,7 +1,7 @@
 # Chip8py
 
-<img src="../assets/invader.png?raw=true"  width="200" height="200" />
-<img src="../assets/petdog.png?raw=true"  width="200" height="200"  />
+<img src="../assets/invader.png?raw=true"  width="300" height="150" />
+<img src="../assets/petdog.png?raw=true"  width="300" height="150"  />
 
 Just a hobby project to learn basics of emulation.
 It should be able to run chip-8 ROM's on pc when completed and debugged.
