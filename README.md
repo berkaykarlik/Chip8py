@@ -31,3 +31,9 @@ These are the sources I used, many thanks to:
 
 * Tobias V. Langhoff, check out his [guide](https://tobiasvl.github.io/blog/write-a-chip-8-emulator/)
 * Thomas P. Greene, check out cowgod's [guide](http://devernay.free.fr/hacks/chip8/C8TECH10.HTM)
+
+
+### Roms
+
+I have included some roms I found as freeware from David Winter's site and chip8Archive repository.
+See roms/README for links. I made no modifications and have no claims on them.
