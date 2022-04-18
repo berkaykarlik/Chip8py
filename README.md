@@ -13,9 +13,14 @@ Warning: I'm still working on bug fixes, see issues for known bugs.
 ### Installation
 * `git clone --recursive https://github.com/berkaykarlik/CHIP-8-interpreter.git`
 * Optional but recommended: `python -m venv venv`
+* Activate venv:
+  * For windows run: `.\venv\Scripts\activate`
+  * Linux or MacOS: `source ./venv/bin/activate`
 * `pip install -r requirements.txt`
 
 ### Running
+
+* If you followed the optional venv step, you need to activate venv whenever you open a new terminal.
 
 * Run this command from the root (top level) of this repo:
 `python main.py path_to_ROM_file`
