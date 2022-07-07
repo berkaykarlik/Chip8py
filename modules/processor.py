@@ -167,9 +167,8 @@ def _8xy6(reg:Register,nd_nimble:int):
     Set Vx = Vx SHR 1.
     """
     vx = reg.get_Vx(nd_nimble)
+    reg.set_Vx(nd_nimble,vx >> 1)
     reg.set_Vx(0xF, vx & 0x1)
-    vx >>= 1
-    reg.set_Vx(nd_nimble,vx)
 
 
 def _8xy7(reg:Register,nd_nimble:int,rd_nimble:int):
@@ -190,10 +189,8 @@ def _8xye(reg:Register,nd_nimble:int):
     Set Vx = Vx SHL 1.
     """
     vx = reg.get_Vx(nd_nimble)
+    reg.set_Vx(nd_nimble,(vx << 1 ) & 0xFF)
     reg.set_Vx(0xF, vx >> 7)
-    vx <<= 1
-    vx &= 0xFF
-    reg.set_Vx(nd_nimble,vx)
 
 
 def _9xy0(reg:Register,mem:Memory,nd_nimble:int,rd_nimble:int):
