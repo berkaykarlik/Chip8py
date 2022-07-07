@@ -231,8 +231,8 @@ def dxyn(reg:Register,mem:Memory,gui:Gui,nd_nimble:int,rd_nimble:int,th_nimble:i
     0xDXYN: DRW Vx, Vy, nibble
     Display n-byte sprite starting at memory location I at (Vx, Vy), set VF = collision.
     """
-    x = reg.get_Vx(nd_nimble)
-    y = reg.get_Vx(rd_nimble)
+    x = reg.get_Vx(nd_nimble) % gui.WIDTH
+    y = reg.get_Vx(rd_nimble) % gui.HEIGHT
     n = th_nimble
     mem_loc = reg.get_I()
     any_flip = 0

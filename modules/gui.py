@@ -53,8 +53,10 @@ class Gui():
         self.update_display()
 
     def set(self, x:int, y:int, bit_val:int) -> bool:
-        x = x % Gui.WIDTH
-        y = y % Gui.HEIGHT
+        # x = x % Gui.WIDTH
+        # y = y % Gui.HEIGHT
+        if x >= Gui.WIDTH or y >= Gui.HEIGHT:
+            return False
         prev = int(self.__frame[x][y])
         self.__frame[x][y] = prev ^ bit_val
         return prev & bit_val
