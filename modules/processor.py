@@ -342,8 +342,9 @@ def fx55(reg:Register,mem:Memory,nd_nimble:int):
     Store registers V0 through Vx in memory starting at location I.
     """
     for i in range(nd_nimble+1):
-        mem.set_mem(reg.get_I()+i, reg.get_Vx(i))
-
+        index = reg.get_I()
+        mem.set_mem(index, reg.get_Vx(i))
+        reg.set_I(index+1)
 
 def fx65(reg:Register,mem:Memory,nd_nimble:int):
     """
@@ -351,4 +352,6 @@ def fx65(reg:Register,mem:Memory,nd_nimble:int):
     Read registers V0 through Vx from memory starting at location I.
     """
     for i in range(nd_nimble+1):
-        reg.set_Vx(i, mem.get_mem(reg.get_I()+i))
+        index = reg.get_I()
+        reg.set_Vx(i, mem.get_mem(index))
+        reg.set_I(index+1)
