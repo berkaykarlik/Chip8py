@@ -44,6 +44,14 @@ class Gui():
                 key_pressed = pygame.key.name(event.key)
                 self.pool.remove(Gui.KEY_MAPPING[key_pressed])
 
+
+    def get_press_release(self):
+        events = pygame.event.get()
+        for event in events:
+            if event.type == pygame.KEYUP:
+                key_pressed = pygame.key.name(event.key)
+                return Gui.KEY_MAPPING[key_pressed]
+
     def get_pool(self):
         return list(self.pool)
 

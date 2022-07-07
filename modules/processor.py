@@ -274,16 +274,16 @@ def fx07(reg:Register,dtimer:DelayTimer,nd_nimble:int):
     reg.set_Vx(nd_nimble,dtimer.get())
 
 
-def fx0a(reg:Register,mem:Memory,pressed_keys:List[int],nd_nimble:int):
+def fx0a(reg:Register,mem:Memory,gui:Gui,nd_nimble:int):
     """
     0xFX0A: LD Vx, K
     Wait for a key press, store the value of the key in Vx.
     All execution stops until a key is pressed.
     """
-    if not pressed_keys:
-        mem.set_pc(mem.get_pc()-0x2)
-    else:
-        reg.set_Vx(nd_nimble, pressed_keys[0])
+    while not (pressed := gui.get_press_release()):
+        pass
+
+    reg.set_Vx(nd_nimble,pressed)
 
 
 def fx15(reg:Register,dtimer:DelayTimer,nd_nimble:int):
