@@ -115,11 +115,11 @@ def main(rom_path: Path) -> None:
                     case 5:
                         processor._8xy5(reg, nd_nimble, rd_nimble)
                     case 6:
-                        processor._8xy6(reg, nd_nimble)
+                        processor._8xy6(reg, nd_nimble,rd_nimble)
                     case 7:
                         processor._8xy7(reg, nd_nimble, rd_nimble)
                     case 0xE:
-                        processor._8xye(reg, nd_nimble)
+                        processor._8xye(reg, nd_nimble,rd_nimble)
             case 0x9:
                 processor._9xy0(reg, mem, nd_nimble, rd_nimble)
             case 0xA:

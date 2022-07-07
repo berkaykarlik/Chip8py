@@ -1,4 +1,3 @@
-from gc import is_finalized
 import random
 from typing import List
 from modules.gui import Gui
@@ -162,12 +161,12 @@ def _8xy5(reg:Register,nd_nimble:int,rd_nimble:int):
     reg.set_Vx(nd_nimble,res)
 
 
-def _8xy6(reg:Register,nd_nimble:int):
+def _8xy6(reg:Register,nd_nimble:int,rd_nimble:int):
     """
     0x8XY6: SHR Vx {, Vy}
     Set Vx = Vx SHR 1.
     """
-    vx = reg.get_Vx(nd_nimble)
+    vx = reg.get_Vx(rd_nimble)
     reg.set_Vx(nd_nimble,vx >> 1)
     reg.set_Vx(0xF, vx & 0x1)
 
@@ -184,12 +183,12 @@ def _8xy7(reg:Register,nd_nimble:int,rd_nimble:int):
     reg.set_Vx(nd_nimble,res)
 
 
-def _8xye(reg:Register,nd_nimble:int):
+def _8xye(reg:Register,nd_nimble:int,rd_nimble:int):
     """
     0x8XYE: SHL Vx {, Vy}
     Set Vx = Vx SHL 1.
     """
-    vx = reg.get_Vx(nd_nimble)
+    vx = reg.get_Vx(rd_nimble)
     reg.set_Vx(nd_nimble,(vx << 1 ) & 0xFF)
     reg.set_Vx(0xF, vx >> 7)
 
