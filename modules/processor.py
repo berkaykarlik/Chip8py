@@ -112,6 +112,7 @@ def _8xy1(reg:Register,nd_nimble:int,rd_nimble:int):
     vy = reg.get_Vx(rd_nimble)
     res = vx | vy
     reg.set_Vx(nd_nimble,res)
+    reg.set_Vx(0xF, 0)
 
 
 def _8xy2(reg:Register,nd_nimble:int,rd_nimble:int):
@@ -123,7 +124,7 @@ def _8xy2(reg:Register,nd_nimble:int,rd_nimble:int):
     vy = reg.get_Vx(rd_nimble)
     res = vx & vy
     reg.set_Vx(nd_nimble,res)
-
+    reg.set_Vx(0xF, 0)
 
 def _8xy3(reg:Register,nd_nimble:int,rd_nimble:int):
     """
@@ -134,7 +135,7 @@ def _8xy3(reg:Register,nd_nimble:int,rd_nimble:int):
     vy = reg.get_Vx(rd_nimble)
     res = vx ^ vy
     reg.set_Vx(nd_nimble,res)
-
+    reg.set_Vx(0xF, 0)
 
 def _8xy4(reg:Register,nd_nimble:int,rd_nimble:int):
     """
