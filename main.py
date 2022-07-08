@@ -68,7 +68,6 @@ def main(rom_path: Path) -> None:
         #keyboard input
         gui.process_events()
         pressed_keys = gui.get_pool()
-        print(f'pressed_keys {pressed_keys}') #for debug
 
         # fetch
         curr_instr = mem.fetch()
