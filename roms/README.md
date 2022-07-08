@@ -1,3 +1,5 @@
+[chip8-test-suite](https://github.com/Timendus/chip8-test-suite) (highly recommended)
+
 [bc_test](https://github.com/daniel5151/AC8E)
 
 [test_opcode](https://github.com/corax89/chip8-test-rom)
