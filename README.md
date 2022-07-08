@@ -27,7 +27,7 @@ Warning: I'm still working on bug fixes, see issues for known bugs.
 
 * Roms under ``./roms` are tested and works... well mostly.
 
-* if you clonned the repo recursively, as described in installation steps, There are roms from the archieve under: `roms\chip8Archive\roms`. However most of them won't work. I'm not sure why. They might be written for other chip8 versions.
+* if you clonned the repo recursively, as described in installation steps, There are roms from the archieve under: `roms\chip8Archive\roms`. However most of them won't work. I'm not sure why. They might be written for other chip8 versions. Use the simple looking ones.
 
 ### Keys
 Every game has different set of controls, I mapped the 16 buttons to the keys in table below.
